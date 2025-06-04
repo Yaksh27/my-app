@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Mail, Phone, Github, Linkedin, Send, User, MessageSquare } from "lucide-react";
+import { Mail, Phone, Github, Linkedin, Send, ArrowUpRight, Check, Sparkles } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -11,9 +11,14 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
+  const [hoveredField, setHoveredField] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      return;
+    }
+    
     setIsSubmitting(true);
     
     // Simulate form submission
@@ -36,71 +41,72 @@ export default function Contact() {
 
   const contactLinks = [
     {
-      label: "Connect with me on LinkedIn",
+      label: "LinkedIn",
       href: "https://linkedin.com/in/yaksh",
       icon: Linkedin,
-      color: "#0077B5",
-      hoverColor: "hover:text-[#0077B5] hover:border-[#0077B5]"
+      color: "from-blue-500 to-blue-600"
     },
     {
-      label: "Check out my GitHub",
+      label: "GitHub", 
       href: "https://github.com/yaksh",
       icon: Github,
-      color: "#333",
-      hoverColor: "hover:text-gray-900 hover:border-gray-900"
+      color: "from-gray-700 to-gray-900"
     },
     {
-      label: "yaksh@example.com",
+      label: "Email",
       href: "mailto:yaksh@example.com",
       icon: Mail,
-      color: "#EA4335",
-      hoverColor: "hover:text-red-500 hover:border-red-500"
+      color: "from-purple-500 to-purple-600"
     },
     {
-      label: "+1 (555) 123-4567",
+      label: "Phone",
       href: "tel:+15551234567",
       icon: Phone,
-      color: "#10B981",
-      hoverColor: "hover:text-emerald-500 hover:border-emerald-500"
+      color: "from-green-500 to-green-600"
     }
   ];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-hidden">
-      {/* Background Elements */}
+    <section className="relative min-h-screen bg-white overflow-hidden">
+      {/* Animated background elements */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          className="absolute w-[800px] h-[800px] bg-gradient-to-r from-indigo-100/30 to-purple-100/20 rounded-full blur-3xl"
+          className="absolute w-[600px] h-[600px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%)",
+            top: "-20%",
+            right: "-10%",
+          }}
           animate={{
-            x: [0, 120, -80, 0],
-            y: [0, -100, 60, 0],
-            scale: [1, 1.3, 0.8, 1],
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            duration: 45,
+            duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          style={{ top: "-20%", right: "-25%" }}
         />
         <motion.div
-          className="absolute w-[600px] h-[600px] bg-gradient-to-tr from-blue-100/25 to-cyan-100/15 rounded-full blur-3xl"
+          className="absolute w-[400px] h-[400px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, rgba(168, 85, 247, 0.05) 0%, transparent 70%)",
+            bottom: "-10%",
+            left: "-5%",
+          }}
           animate={{
-            x: [0, -100, 80, 0],
-            y: [0, 80, -60, 0],
-            scale: [1, 1.2, 0.9, 1],
+            scale: [1.2, 1, 1.2],
+            opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            duration: 50,
+            duration: 10,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 10,
           }}
-          style={{ bottom: "-25%", left: "-20%" }}
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24">
         {/* Header Section */}
         <div className="text-center mb-20">
           <motion.div
@@ -109,17 +115,26 @@ export default function Contact() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="mb-8"
           >
-            <p className="text-sm uppercase tracking-wider text-gray-500 mb-4 font-semibold">
-              Ready to collaborate?
+            <p className="text-sm uppercase tracking-[0.2em] text-gray-500 mb-6 font-medium">
+              READY TO COLLABORATE?
             </p>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.9] text-gray-900">
-              LET'S<span className="text-indigo-600">*</span>BUILD
-            </h1>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.9] text-gray-900 mb-6">
+            <div className="relative inline-block">
+              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-gray-900">
+                LET'S<span className="text-indigo-600">*</span>BUILD
+              </h1>
+              <motion.div
+                className="absolute -right-12 top-0"
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Sparkles className="w-8 h-8 text-indigo-600/40" />
+              </motion.div>
+            </div>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-gray-900 mb-2">
               SOMETHING
             </h1>
             <div className="relative inline-block">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.9] text-gray-900">
+              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-gray-900">
                 GREAT!
               </h1>
               <motion.div
@@ -143,150 +158,250 @@ export default function Contact() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Contact Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start max-w-6xl mx-auto">
+          {/* Contact Form - Wider column */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative"
+            className="lg:col-span-3"
           >
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-gray-200/60">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Send me a message</h2>
+            <div className="bg-gray-50/50 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-gray-100/50 shadow-sm hover:shadow-lg transition-all duration-500">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Send me a message</h2>
+              <p className="text-gray-500 mb-8">I'd love to hear from you. Drop me a line below.</p>
               
-              <div className="space-y-6">
-                <div className="relative">
-                  <User className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your name"
-                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 bg-white/50"
-                  />
+              <div className="space-y-8">
+                {/* Name Field */}
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setHoveredField('name')}
+                  onMouseLeave={() => setHoveredField(null)}
+                >
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Name
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      onFocus={() => setFocusedField('name')}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder="John Doe"
+                      className="w-full px-4 py-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300 text-gray-900 placeholder-gray-400"
+                    />
+                    <motion.div
+                      className="absolute inset-0 rounded-xl pointer-events-none"
+                      style={{
+                        background: "linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)",
+                        opacity: 0,
+                        zIndex: -1,
+                      }}
+                      animate={{
+                        opacity: focusedField === 'name' ? 0.05 : hoveredField === 'name' ? 0.02 : 0,
+                      }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
                 </div>
 
-                <div className="relative">
-                  <Mail className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="your.email@example.com"
-                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 bg-white/50"
-                  />
+                {/* Email Field */}
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setHoveredField('email')}
+                  onMouseLeave={() => setHoveredField(null)}
+                >
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      onFocus={() => setFocusedField('email')}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder="john@example.com"
+                      className="w-full px-4 py-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300 text-gray-900 placeholder-gray-400"
+                    />
+                    <motion.div
+                      className="absolute inset-0 rounded-xl pointer-events-none"
+                      style={{
+                        background: "linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)",
+                        opacity: 0,
+                        zIndex: -1,
+                      }}
+                      animate={{
+                        opacity: focusedField === 'email' ? 0.05 : hoveredField === 'email' ? 0.02 : 0,
+                      }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
                 </div>
 
-                <div className="relative">
-                  <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell me about your project..."
-                    rows={5}
-                    className="w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all duration-200 resize-none bg-white/50"
-                  />
+                {/* Message Field */}
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setHoveredField('message')}
+                  onMouseLeave={() => setHoveredField(null)}
+                >
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Message
+                  </label>
+                  <div className="relative">
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      onFocus={() => setFocusedField('message')}
+                      onBlur={() => setFocusedField(null)}
+                      placeholder="Tell me about your project, ideas, or just say hello..."
+                      rows={5}
+                      className="w-full px-4 py-4 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 transition-all duration-300 resize-none text-gray-900 placeholder-gray-400"
+                    />
+                    <motion.div
+                      className="absolute inset-0 rounded-xl pointer-events-none"
+                      style={{
+                        background: "linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%)",
+                        opacity: 0,
+                        zIndex: -1,
+                      }}
+                      animate={{
+                        opacity: focusedField === 'message' ? 0.05 : hoveredField === 'message' ? 0.02 : 0,
+                      }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </div>
                 </div>
 
+                {/* Submit Button */}
                 <motion.button
                   onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="w-full bg-gray-900 text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-gray-800 transition-all duration-200 disabled:opacity-50"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting || !formData.name || !formData.email || !formData.message}
+                  className="relative group w-full bg-gray-900 text-white px-8 py-5 text-lg font-semibold rounded-xl overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  whileHover={{ scale: isSubmitting || !formData.name || !formData.email || !formData.message ? 1 : 1.01 }}
+                  whileTap={{ scale: isSubmitting || !formData.name || !formData.email || !formData.message ? 1 : 0.99 }}
                 >
-                  {isSubmitting ? (
-                    <motion.div
-                      className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    />
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      Send Message
-                    </>
-                  )}
+                  {/* Animated gradient background */}
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    animate={{
+                      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    style={{
+                      backgroundSize: "200% 100%",
+                    }}
+                  />
+                  
+                  <div className="relative flex items-center justify-center gap-3">
+                    {isSubmitting ? (
+                      <>
+                        <motion.div
+                          className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                      </>
+                    )}
+                  </div>
                 </motion.button>
-              </div>
 
-              <AnimatePresence>
-                {submitted && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="mt-4 p-4 bg-green-50 text-green-800 rounded-xl border border-green-200"
-                  >
-                    ✅ Message sent! I'll get back to you soon.
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                {/* Success Message */}
+                <AnimatePresence>
+                  {submitted && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                      className="flex items-center gap-3 text-green-600 bg-green-50 p-4 rounded-xl border border-green-200"
+                    >
+                      <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                        <Check className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <span className="font-semibold">Message sent successfully!</span>
+                        <p className="text-sm text-green-600/80 mt-1">I'll get back to you within 24 hours.</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </motion.div>
 
-          {/* Contact Links */}
+          {/* Contact Links - Narrower column */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="space-y-6"
+            className="lg:col-span-2 space-y-4"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Let's connect</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Links</h2>
             
-            {contactLinks.map((link, index) => (
-              <motion.a
-                key={index}
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={`group flex items-center gap-4 p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200/60 hover:bg-white/80 transition-all duration-300 ${link.hoverColor}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -2 }}
-              >
-                <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center group-hover:bg-gray-50 transition-colors duration-300">
-                  <link.icon className="w-6 h-6 text-gray-600 group-hover:scale-110 transition-all duration-300" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-semibold text-gray-900 group-hover:scale-105 transition-transform duration-200">
-                    {link.label}
-                  </p>
-                </div>
-                <div className="flex-shrink-0">
-                  <motion.div
-                    className="w-8 h-8 flex items-center justify-center"
-                    initial={{ x: 0 }}
-                    whileHover={{ x: 4 }}
-                  >
-                    <span className="text-gray-400 group-hover:text-gray-600">→</span>
-                  </motion.div>
-                </div>
-              </motion.a>
-            ))}
+            <div className="space-y-3">
+              {contactLinks.map((link, index) => (
+                <motion.a
+                  key={index}
+                  href={link.href}
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="group relative flex items-center gap-4 p-4 bg-gray-50/50 hover:bg-white rounded-2xl border border-gray-100/50 hover:border-gray-200 transition-all duration-300 hover:shadow-md"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 + index * 0.1 }}
+                  whileHover={{ x: 4 }}
+                >
+                  {/* Icon with dynamic gradient */}
+                  <div className="relative">
+                    <div className={`w-12 h-12 bg-gradient-to-br ${link.color} rounded-xl flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:scale-110`}>
+                      <link.icon className="w-5 h-5 text-white" />
+                    </div>
+                  </div>
 
-            {/* Additional Info */}
+                  <div className="flex-1">
+                    <span className="text-base font-medium text-gray-900">
+                      {link.label}
+                    </span>
+                  </div>
+
+                  <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-all duration-300 opacity-0 group-hover:opacity-100" />
+                </motion.a>
+              ))}
+            </div>
+
+            {/* Response Time Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2 }}
-              className="mt-12 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100"
+              className="mt-8 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100/50"
             >
-              <h3 className="font-bold text-gray-900 mb-3">Quick Response</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                I typically respond within 24 hours. For urgent inquiries, feel free to reach out via phone or LinkedIn.
-              </p>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 animate-pulse" />
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Available for work</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    I typically respond within 24 hours. Currently accepting new projects and collaborations.
+                  </p>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom accent line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
     </section>
   );
 }
