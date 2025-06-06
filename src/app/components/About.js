@@ -1,7 +1,83 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, Calendar, Clock, ArrowRight, Sparkles, Star } from 'lucide-react';
+
+// Professional animated background elements
+const ProfessionalBackground = () => {
+  return (
+    <>
+      {/* Animated Grid Lines */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <svg className="w-full h-full">
+          <defs>
+            <pattern id="professionalGrid" width="100" height="100" patternUnits="userSpaceOnUse">
+              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="currentColor" strokeWidth="1" className="text-violet-600"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#professionalGrid)" />
+        </svg>
+      </div>
+
+      {/* Subtle Moving Lines */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-violet-400/20 to-transparent"
+          style={{ top: '20%', left: '-50%' }}
+          animate={{ x: ['0%', '50%'] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-indigo-400/15 to-transparent"
+          style={{ top: '60%', left: '-50%' }}
+          animate={{ x: ['0%', '50%'] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear", delay: 5 }}
+        />
+        <motion.div
+          className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-blue-400/10 to-transparent"
+          style={{ top: '80%', left: '-50%' }}
+          animate={{ x: ['0%', '50%'] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear", delay: 10 }}
+        />
+      </div>
+
+      {/* Geometric Corner Elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 opacity-5">
+        <motion.div
+          className="w-full h-full border border-violet-400 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div
+          className="absolute top-12 right-12 w-72 h-72 border border-indigo-400 rounded-full"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+
+      <div className="absolute bottom-0 left-0 w-80 h-80 opacity-5">
+        <motion.div
+          className="w-full h-full border border-blue-400"
+          style={{ clipPath: 'polygon(0 0, 100% 50%, 0 100%)' }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+
+      {/* Subtle Dots Pattern */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <svg className="w-full h-full">
+          <defs>
+            <pattern id="dotPattern" width="50" height="50" patternUnits="userSpaceOnUse">
+              <circle cx="25" cy="25" r="1" fill="currentColor" className="text-violet-600" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dotPattern)" />
+        </svg>
+      </div>
+    </>
+  );
+};
 
 // Shuffle/decode effect component
 function ShuffleText({ text, duration = 2000, className = "" }) {
@@ -38,14 +114,12 @@ function ShuffleText({ text, duration = 2000, className = "" }) {
   return <span className={className}>{display}</span>;
 }
 
-// Sticky Note To-Do List Component
-function StickyNoteTodoList() {
-  // Static todos - you'll manage these from your backend
-  const todos = [
-    { id: 1, text: "Finish portfolio redesign", completed: true },
-    { id: 2, text: "Launch new side project", completed: false },
-    { id: 3, text: "Learn Three.js animations", completed: false },
-    { id: 4, text: "Coffee with design team", completed: false }
+// Elegant Task Card
+function ElegantTaskCard() {
+  const tasks = [
+    { id: 1, text: "Design Sprint Review", completed: true, priority: "high" },
+    { id: 2, text: "Client Presentation", completed: false, priority: "high" },
+    { id: 3, text: "Team Collaboration", completed: false, priority: "medium" }
   ];
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -57,79 +131,88 @@ function StickyNoteTodoList() {
       onDrag={(event, info) => {
         setPosition({ x: info.offset.x, y: info.offset.y });
       }}
-      className="absolute top-1/3 right-8 md:right-16 w-64 hidden lg:block cursor-grab active:cursor-grabbing"
-      initial={{ opacity: 0, x: 50, scale: 0.9, rotate: -2 }}
-      animate={{ opacity: 1, x: 0, scale: 1, rotate: 3 }}
-      transition={{ duration: 1, delay: 2 }}
+      className="absolute top-1/3 right-8 md:right-12 w-72 hidden lg:block cursor-grab active:cursor-grabbing"
+      initial={{ opacity: 0, x: 50, scale: 0.95, rotate: -3 }}
+      animate={{ opacity: 1, x: 0, scale: 1, rotate: 2 }}
+      transition={{ duration: 0.8, delay: 2 }}
       whileHover={{ scale: 1.05, rotate: 0 }}
       style={{ x: position.x, y: position.y }}
     >
-      {/* Sticky Note Shadow */}
-      <div className="absolute inset-0 bg-black/10 rounded-sm transform translate-x-1 translate-y-1 blur-sm" />
-      
-      {/* Main Sticky Note */}
-    <div className="relative bg-gradient-to-br from-yellow-50 via-beige-100 to-amber-50 rounded-sm p-5 shadow-lg transform rotate-1 hover:rotate-0 transition-all duration-300">
-
-        {/* Tape effect at top */}
-        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-16 h-5 bg-white/40 rounded-sm shadow-sm border border-gray-200/30" />
-        
-        {/* Fold effect at corner */}
-        <div className="absolute top-0 right-0 w-6 h-6 bg-yellow-300/60 transform rotate-45 translate-x-3 -translate-y-3" />
+      {/* Card with beautiful shadows */}
+      <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl p-6 shadow-2xl shadow-violet-200/50 border border-white/50">
+        {/* Decorative corner elements */}
+        <div className="absolute top-4 right-4">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          >
+            <Star className="w-4 h-4 text-violet-400" fill="currentColor" />
+          </motion.div>
+        </div>
         
         {/* Header */}
-        <div className="mb-4">
-          <h3 className="font-bold text-gray-800 text-base mb-1 font-handwriting">Today's Focus</h3>
-          <div className="w-full h-px bg-gray-400/30" />
+        <div className="mb-5">
+          <h3 className="font-bold text-slate-700 text-lg mb-2">Today's Goals</h3>
+          <div className="w-full h-0.5 bg-gradient-to-r from-violet-400 via-indigo-400 to-blue-400 rounded-full" />
         </div>
 
-        {/* To-Do Items */}
-        <div className="space-y-3">
-          {todos.map((todo, index) => (
+        {/* Task Items */}
+        <div className="space-y-4">
+          {tasks.map((task, index) => (
             <motion.div
-              key={todo.id}
+              key={task.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.2 + index * 0.1 }}
-              className="flex items-start gap-3"
+              className="flex items-center gap-3 group"
             >
-              {/* Checkbox - read only */}
-              <div className={`flex-shrink-0 w-4 h-4 mt-0.5 border-2 border-gray-600 rounded-sm transition-all duration-200 ${
-                todo.completed 
-                  ? 'bg-gray-600' 
-                  : 'bg-transparent'
+              {/* Beautiful checkbox */}
+              <div className={`relative w-5 h-5 border-2 rounded-lg transition-all duration-300 ${
+                task.completed 
+                  ? 'bg-gradient-to-br from-violet-500 to-indigo-500 border-violet-500 shadow-lg shadow-violet-200' 
+                  : 'border-violet-300 hover:border-violet-400 bg-white/50'
               }`}>
-                {todo.completed && (
-                  <Check className="w-3 h-3 text-yellow-100" strokeWidth={3} />
+                {task.completed && (
+                  <Check className="w-3 h-3 text-white absolute top-0.5 left-0.5" strokeWidth={3} />
                 )}
               </div>
               
-              <span className={`text-sm font-handwriting transition-all duration-200 ${
-                todo.completed 
-                  ? 'text-gray-600 line-through' 
-                  : 'text-gray-800'
+              {/* Task Text */}
+              <span className={`text-sm font-medium transition-all duration-300 ${
+                task.completed ? 'text-slate-500 line-through' : 'text-slate-700 group-hover:text-violet-700'
               }`}>
-                {todo.text}
+                {task.text}
               </span>
+              
+              {/* Priority dot */}
+              <div className={`w-2 h-2 rounded-full ml-auto ${
+                task.priority === 'high' ? 'bg-gradient-to-r from-violet-500 to-indigo-500 shadow-lg shadow-violet-200' :
+                task.priority === 'medium' ? 'bg-gradient-to-r from-indigo-500 to-blue-500 shadow-lg shadow-indigo-200' : 
+                'bg-gray-300'
+              }`} />
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom corner curl effect */}
-        <div className="absolute bottom-0 right-0 w-4 h-4">
-          <div className="absolute bottom-0 right-0 w-4 h-4 bg-yellow-300/40 transform rotate-45 translate-x-2 translate-y-2" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 bg-gradient-to-br from-transparent to-yellow-400/20 transform rotate-45 translate-x-1.5 translate-y-1.5" />
+        {/* Progress section */}
+        <div className="mt-5 pt-4">
+          <div className="flex items-center justify-between text-xs text-slate-600 mb-2">
+            <span>Progress</span>
+            <span>33%</span>
+          </div>
+          <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: "33%" }}
+              transition={{ duration: 1.5, delay: 3 }}
+            />
+          </div>
         </div>
 
-        {/* Small doodle/decoration */}
-        <div className="absolute bottom-2 left-3">
-          <motion.div
-            className="text-gray-400/60 text-xs"
-            animate={{ rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            ✨
-          </motion.div>
-        </div>
+        {/* Decorative elements */}
+        <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-br from-violet-200 to-indigo-200 rounded-full opacity-60" />
+        <div className="absolute -top-1 -left-1 w-4 h-4 bg-gradient-to-br from-blue-200 to-violet-200 rounded-full opacity-40" />
       </div>
     </motion.div>
   );
@@ -149,14 +232,13 @@ export default function About() {
     return () => clearInterval(interval);
   }, []);
 
-  // Fun facts that rotate
   const funFacts = [
-    "🎵 Currently vibing to lo-fi beats",
-    "☕ Coffee consumed today: 3 cups",
-    "🌙 Night owl, best ideas at 2 AM",
-    "📚 Reading: Atomic Habits",
-    "🎯 Focus mode: Deep work session",
-    "🚀 Building the future, one pixel at a time"
+    "🎨 Crafting pixel-perfect experiences",
+    "☕ Fueled by creativity and coffee",
+    "⚡ Bringing ideas to life with code",
+    "📚 Learning something new every day",
+    "✨ Making the web more beautiful",
+    "🚀 Turning dreams into reality"
   ];
 
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
@@ -169,15 +251,70 @@ export default function About() {
   }, []);
 
   return (
-    <main className="relative flex flex-col items-start justify-center min-h-screen px-8 pt-32 bg-white overflow-hidden">
-      {/* Animated Background Elements */}
+    <main className="relative flex flex-col items-start justify-center min-h-screen px-8 pt-32 overflow-hidden">
+      {/* Beautiful Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-violet-50 to-indigo-50" />
+      
+      {/* Animated Mesh Background */}
+      <div className="absolute inset-0">
+        <svg className="w-full h-full opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="meshGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.3" />
+              <stop offset="50%" stopColor="#6366f1" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.3" />
+            </linearGradient>
+            <linearGradient id="meshGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
+              <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#6366f1" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          
+          <motion.path
+            d="M0,20 Q25,10 50,20 T100,20 L100,80 Q75,90 50,80 T0,80 Z"
+            fill="url(#meshGradient1)"
+            animate={{
+              d: [
+                "M0,20 Q25,10 50,20 T100,20 L100,80 Q75,90 50,80 T0,80 Z",
+                "M0,30 Q25,20 50,30 T100,30 L100,70 Q75,60 50,70 T0,70 Z",
+                "M0,20 Q25,10 50,20 T100,20 L100,80 Q75,90 50,80 T0,80 Z"
+              ]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          <motion.path
+            d="M0,60 Q25,70 50,60 T100,60 L100,40 Q75,30 50,40 T0,40 Z"
+            fill="url(#meshGradient2)"
+            animate={{
+              d: [
+                "M0,60 Q25,70 50,60 T100,60 L100,40 Q75,30 50,40 T0,40 Z",
+                "M0,50 Q25,40 50,50 T100,50 L100,30 Q75,40 50,30 T0,30 Z",
+                "M0,60 Q25,70 50,60 T100,60 L100,40 Q75,30 50,40 T0,40 Z"
+              ]
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+          />
+        </svg>
+      </div>
+
+      {/* Floating Orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Floating Gradient Orbs */}
         <motion.div
-          className="absolute w-96 h-96 bg-gradient-to-r from-blue-100/30 to-purple-100/30 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-violet-200/40 via-indigo-200/30 to-transparent rounded-full blur-3xl"
           animate={{
             x: [0, 100, -50, 0],
-            y: [0, -80, 50, 0],
+            y: [0, -50, 50, 0],
             scale: [1, 1.2, 0.8, 1],
           }}
           transition={{
@@ -185,15 +322,14 @@ export default function About() {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          style={{ top: '10%', left: '60%' }}
         />
         
         <motion.div
-          className="absolute w-64 h-64 bg-gradient-to-r from-green-100/20 to-yellow-100/20 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-200/40 via-indigo-200/30 to-transparent rounded-full blur-3xl"
           animate={{
             x: [0, -80, 60, 0],
             y: [0, 60, -40, 0],
-            scale: [0.8, 1.1, 0.9, 0.8],
+            scale: [1, 0.8, 1.3, 1],
           }}
           transition={{
             duration: 25,
@@ -201,62 +337,60 @@ export default function About() {
             ease: "easeInOut",
             delay: 5
           }}
-          style={{ top: '70%', left: '10%' }}
         />
 
-        {/* Floating Particles */}
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-gray-300/40 rounded-full"
-            animate={{
-              y: [-20, -100, -20],
-              x: [0, Math.sin(i) * 30, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 8 + i * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 1.5,
-            }}
-            style={{
-              left: `${10 + i * 12}%`,
-              top: `${60 + (i % 3) * 15}%`,
-            }}
-          />
-        ))}
+        <motion.div
+          className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-indigo-200/30 via-violet-200/20 to-transparent rounded-full blur-2xl"
+          animate={{
+            x: [0, 40, -30, 0],
+            y: [0, -30, 30, 0],
+            scale: [1, 1.1, 0.9, 1],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 8
+          }}
+        />
+      </div>
 
-        {/* Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="w-full h-full" style={{
-            backgroundImage: `
-              linear-gradient(90deg, #000 1px, transparent 1px),
-              linear-gradient(180deg, #000 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px'
-          }} />
-        </div>
+      {/* Professional Background Elements */}
+      <ProfessionalBackground />
+
+      {/* Decorative Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <svg className="w-full h-full">
+          <defs>
+            <pattern id="decorativeGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-violet-400"/>
+              <circle cx="0" cy="0" r="1.5" fill="currentColor" className="text-indigo-300" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#decorativeGrid)" />
+        </svg>
       </div>
 
       {/* Main Content */}
       <div className="relative z-10">
-        {/* Big Bold Intro */}
+        {/* Hero Text */}
         <motion.h1 
-            className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-4"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            >
+          className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-4"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <span className="text-slate-700">
             <ShuffleText text="HELLO, I'M " duration={1600} />
-            <span className="text-black/70">
-                <ShuffleText text="YAKSH" duration={1200} />
-            </span>
-            </motion.h1>
+          </span>
+          <span className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent">
+            <ShuffleText text="YAKSH" duration={1200} />
+          </span>
+        </motion.h1>
 
-        {/* Animated Subheading */}
+        {/* Subheading */}
         <motion.p 
-          className="max-w-xl text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed"
+          className="max-w-xl text-lg md:text-2xl text-slate-600 mb-8 leading-relaxed"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -264,33 +398,66 @@ export default function About() {
           {displayText}
         </motion.p>
 
-        {/* Call to Action */}
-        <motion.a
-          href="#contact"
-          className="inline-block bg-black text-white text-lg font-semibold px-8 py-3 rounded-2xl shadow hover:bg-gray-900 transition-all duration-300 hover:shadow-lg hover:scale-105"
+        {/* Clean CTA Button */}
+        <motion.div
+          className="relative"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
         >
-          Get in Touch
-        </motion.a>
+          <motion.a
+            href="#contact"
+            className="inline-flex items-center gap-3 bg-white/90 backdrop-blur-sm text-slate-700 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl border border-white/50 transition-all duration-300 hover:bg-white hover:shadow-2xl hover:border-violet-200"
+            whileHover={{ scale: 1.05, y: -3 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <motion.div
+              animate={{ 
+                rotate: [0, 15, -15, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <Sparkles className="w-5 h-5 text-violet-600" />
+            </motion.div>
+            <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+              Get Started
+            </span>
+            <motion.div
+              className="text-blue-600"
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <ArrowRight className="w-5 h-5" />
+            </motion.div>
+          </motion.a>
+        </motion.div>
       </div>
 
-      {/* Fun Status Bar */}
+      {/* Elegant Status Bar */}
       <motion.div
         className="fixed bottom-8 left-8 right-8 md:left-auto md:right-8 md:w-80"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 1 }}
       >
-        <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl px-6 py-4 shadow-lg">
+        <div className="relative bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl px-6 py-4 shadow-xl shadow-violet-100/50">
           <div className="flex items-center gap-3">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <motion.div 
+              className="w-2 h-2 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"
+              animate={{ 
+                scale: [1, 1.3, 1], 
+                opacity: [1, 0.7, 1] 
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
             <motion.span
               key={currentFactIndex}
-              className="text-sm text-gray-600 font-medium"
+              className="text-sm text-slate-600 font-medium"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
@@ -302,7 +469,7 @@ export default function About() {
         </div>
       </motion.div>
 
-      {/* Scroll Indicator */}
+      {/* Beautiful Scroll Indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
         initial={{ opacity: 0 }}
@@ -310,23 +477,23 @@ export default function About() {
         transition={{ duration: 1, delay: 1.5 }}
       >
         <motion.div
-          className="flex flex-col items-center gap-2 text-gray-400"
+          className="flex flex-col items-center gap-2 text-slate-400"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <span className="text-xs uppercase tracking-wider">Scroll</span>
-          <div className="w-0.5 h-8 bg-gray-300 rounded-full">
+          <span className="text-xs uppercase tracking-wider font-medium">Explore</span>
+          <div className="w-0.5 h-8 bg-gradient-to-b from-violet-300 to-indigo-300 rounded-full">
             <motion.div
-              className="w-full bg-gray-600 rounded-full"
-              animate={{ height: ["0%", "100%", "0%"] }}
+              className="w-full bg-gradient-to-b from-violet-500 to-blue-500 rounded-full"
+              animate={{ height: ["0%", "70%", "0%"] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Sticky Note To-Do List */}
-      <StickyNoteTodoList />
+      {/* Elegant Task Card */}
+      <ElegantTaskCard />
     </main>
   );
 }
