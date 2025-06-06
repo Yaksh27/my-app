@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 // Shuffle/decode effect component
 function ShuffleText({ text, duration = 2000, className = "" }) {
@@ -35,6 +36,103 @@ function ShuffleText({ text, duration = 2000, className = "" }) {
   }, [text, duration]);
 
   return <span className={className}>{display}</span>;
+}
+
+// Sticky Note To-Do List Component
+function StickyNoteTodoList() {
+  // Static todos - you'll manage these from your backend
+  const todos = [
+    { id: 1, text: "Finish portfolio redesign", completed: true },
+    { id: 2, text: "Launch new side project", completed: false },
+    { id: 3, text: "Learn Three.js animations", completed: false },
+    { id: 4, text: "Coffee with design team", completed: false }
+  ];
+
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  return (
+    <motion.div
+      drag
+      dragMomentum={false}
+      onDrag={(event, info) => {
+        setPosition({ x: info.offset.x, y: info.offset.y });
+      }}
+      className="absolute top-1/3 right-8 md:right-16 w-64 hidden lg:block cursor-grab active:cursor-grabbing"
+      initial={{ opacity: 0, x: 50, scale: 0.9, rotate: -2 }}
+      animate={{ opacity: 1, x: 0, scale: 1, rotate: 3 }}
+      transition={{ duration: 1, delay: 2 }}
+      whileHover={{ scale: 1.05, rotate: 0 }}
+      style={{ x: position.x, y: position.y }}
+    >
+      {/* Sticky Note Shadow */}
+      <div className="absolute inset-0 bg-black/10 rounded-sm transform translate-x-1 translate-y-1 blur-sm" />
+      
+      {/* Main Sticky Note */}
+    <div className="relative bg-gradient-to-br from-yellow-50 via-beige-100 to-amber-50 rounded-sm p-5 shadow-lg transform rotate-1 hover:rotate-0 transition-all duration-300">
+
+        {/* Tape effect at top */}
+        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-16 h-5 bg-white/40 rounded-sm shadow-sm border border-gray-200/30" />
+        
+        {/* Fold effect at corner */}
+        <div className="absolute top-0 right-0 w-6 h-6 bg-yellow-300/60 transform rotate-45 translate-x-3 -translate-y-3" />
+        
+        {/* Header */}
+        <div className="mb-4">
+          <h3 className="font-bold text-gray-800 text-base mb-1 font-handwriting">Today's Focus</h3>
+          <div className="w-full h-px bg-gray-400/30" />
+        </div>
+
+        {/* To-Do Items */}
+        <div className="space-y-3">
+          {todos.map((todo, index) => (
+            <motion.div
+              key={todo.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.2 + index * 0.1 }}
+              className="flex items-start gap-3"
+            >
+              {/* Checkbox - read only */}
+              <div className={`flex-shrink-0 w-4 h-4 mt-0.5 border-2 border-gray-600 rounded-sm transition-all duration-200 ${
+                todo.completed 
+                  ? 'bg-gray-600' 
+                  : 'bg-transparent'
+              }`}>
+                {todo.completed && (
+                  <Check className="w-3 h-3 text-yellow-100" strokeWidth={3} />
+                )}
+              </div>
+              
+              <span className={`text-sm font-handwriting transition-all duration-200 ${
+                todo.completed 
+                  ? 'text-gray-600 line-through' 
+                  : 'text-gray-800'
+              }`}>
+                {todo.text}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Bottom corner curl effect */}
+        <div className="absolute bottom-0 right-0 w-4 h-4">
+          <div className="absolute bottom-0 right-0 w-4 h-4 bg-yellow-300/40 transform rotate-45 translate-x-2 translate-y-2" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 bg-gradient-to-br from-transparent to-yellow-400/20 transform rotate-45 translate-x-1.5 translate-y-1.5" />
+        </div>
+
+        {/* Small doodle/decoration */}
+        <div className="absolute bottom-2 left-3">
+          <motion.div
+            className="text-gray-400/60 text-xs"
+            animate={{ rotate: [0, 5, -5, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            ✨
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  );
 }
 
 export default function About() {
@@ -156,7 +254,6 @@ export default function About() {
             </span>
             </motion.h1>
 
-
         {/* Animated Subheading */}
         <motion.p 
           className="max-w-xl text-lg md:text-2xl text-gray-700 mb-8 leading-relaxed"
@@ -228,26 +325,8 @@ export default function About() {
         </motion.div>
       </motion.div>
 
-      {/* Floating Quote Section */}
-      <motion.div
-        className="absolute top-1/3 right-8 md:right-16 max-w-xs hidden lg:block"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 2 }}
-      >
-        <div className="bg-gray-50/50 backdrop-blur-sm border border-gray-100 rounded-3xl p-6 shadow-sm">
-          <motion.blockquote
-            className="text-sm text-gray-600 italic leading-relaxed"
-            animate={{ opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          >
-            "The best way to predict the future is to create it."
-          </motion.blockquote>
-          <cite className="text-xs text-gray-400 mt-2 block">— Peter Drucker</cite>
-        </div>
-      </motion.div>
-
-      
+      {/* Sticky Note To-Do List */}
+      <StickyNoteTodoList />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { ExternalLink, Github, Play, Code, Sparkles, Zap, Rocket, Star } from 'lucide-react';
+import { ExternalLink, Github, Code, Sparkles, Zap, Rocket, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Projects = () => {
@@ -204,23 +204,15 @@ const Projects = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
                 
-                {/* Action Buttons */}
-                <div className="absolute top-3 right-3 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {/* Action Button - Only External Link */}
+                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                   <motion.a
                     href={project.liveUrl}
-                    className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors duration-200 shadow-lg"
+                    className="flex items-center justify-center w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors duration-200 shadow-lg"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <ExternalLink className="w-3.5 h-3.5 text-gray-700" />
-                  </motion.a>
-                  <motion.a
-                    href={project.githubUrl}
-                    className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors duration-200 shadow-lg"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Github className="w-3.5 h-3.5 text-gray-700" />
+                    <ExternalLink className="w-4 h-4 text-gray-700" />
                   </motion.a>
                 </div>
               </div>
@@ -234,9 +226,9 @@ const Projects = () => {
                   {project.description}
                 </p>
                 
-                {/* Technologies */}
+                {/* Technologies - Show All */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                  {project.technologies.map((tech, techIndex) => (
                     <span
                       key={techIndex}
                       className="px-2.5 py-1 bg-gray-100/80 text-gray-600 text-xs rounded-full border border-gray-200/60 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-600 transition-colors duration-200 backdrop-blur-sm"
@@ -244,23 +236,11 @@ const Projects = () => {
                       {tech}
                     </span>
                   ))}
-                  {project.technologies.length > 3 && (
-                    <span className="px-2.5 py-1 bg-gray-50 text-gray-500 text-xs rounded-full border border-gray-200">
-                      +{project.technologies.length - 3}
-                    </span>
-                  )}
                 </div>
 
-                {/* Action Bar */}
+                {/* Action Bar - Only GitHub Link */}
                 <div className="flex items-center justify-between pt-4 border-t border-gray-200/60">
-                  <div className="flex items-center space-x-4">
-                    <a
-                      href={project.liveUrl}
-                      className="flex items-center space-x-1.5 text-sm text-indigo-600 hover:text-indigo-700 transition-colors duration-200 font-medium"
-                    >
-                      <Play className="w-3.5 h-3.5" />
-                      <span>Demo</span>
-                    </a>
+                  <div className="flex items-center">
                     <a
                       href={project.githubUrl}
                       className="flex items-center space-x-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200 font-medium"
