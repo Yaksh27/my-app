@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Calendar, Clock, ArrowRight, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import LocationStatus from './LocationStatus';
+import TerminalThemeToggle from './TerminalThemeToggle';
 
 // Professional animated background elements
 const ProfessionalBackground = () => {
@@ -112,110 +114,6 @@ function ShuffleText({ text, duration = 2000, className = "" }) {
   }, [text, duration]);
 
   return <span className={className}>{display}</span>;
-}
-
-// Elegant Task Card
-function ElegantTaskCard() {
-  const tasks = [
-    { id: 1, text: "Design Sprint Review", completed: true, priority: "high" },
-    { id: 2, text: "Client Presentation", completed: false, priority: "high" },
-    { id: 3, text: "Team Collaboration", completed: false, priority: "medium" }
-  ];
-
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  return (
-    <motion.div
-      drag
-      dragMomentum={false}
-      onDrag={(event, info) => {
-        setPosition({ x: info.offset.x, y: info.offset.y });
-      }}
-      className="absolute top-1/3 right-8 md:right-12 w-72 hidden lg:block cursor-grab active:cursor-grabbing"
-      initial={{ opacity: 0, x: 50, scale: 0.95, rotate: -3 }}
-      animate={{ opacity: 1, x: 0, scale: 1, rotate: 2 }}
-      transition={{ duration: 0.8, delay: 2 }}
-      whileHover={{ scale: 1.05, rotate: 0 }}
-      style={{ x: position.x, y: position.y }}
-    >
-      {/* Card with beautiful shadows */}
-      <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl p-6 shadow-2xl shadow-violet-200/50 border border-white/50">
-        {/* Decorative corner elements */}
-        <div className="absolute top-4 right-4">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          >
-            <Star className="w-4 h-4 text-violet-400" fill="currentColor" />
-          </motion.div>
-        </div>
-        
-        {/* Header */}
-        <div className="mb-5">
-          <h3 className="font-bold text-slate-700 text-lg mb-2">Today's Goals</h3>
-          <div className="w-full h-0.5 bg-gradient-to-r from-violet-400 via-indigo-400 to-blue-400 rounded-full" />
-        </div>
-
-        {/* Task Items */}
-        <div className="space-y-4">
-          {tasks.map((task, index) => (
-            <motion.div
-              key={task.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.2 + index * 0.1 }}
-              className="flex items-center gap-3 group"
-            >
-              {/* Beautiful checkbox */}
-              <div className={`relative w-5 h-5 border-2 rounded-lg transition-all duration-300 ${
-                task.completed 
-                  ? 'bg-gradient-to-br from-violet-500 to-indigo-500 border-violet-500 shadow-lg shadow-violet-200' 
-                  : 'border-violet-300 hover:border-violet-400 bg-white/50'
-              }`}>
-                {task.completed && (
-                  <Check className="w-3 h-3 text-white absolute top-0.5 left-0.5" strokeWidth={3} />
-                )}
-              </div>
-              
-              {/* Task Text */}
-              <span className={`text-sm font-medium transition-all duration-300 ${
-                task.completed ? 'text-slate-500 line-through' : 'text-slate-700 group-hover:text-violet-700'
-              }`}>
-                {task.text}
-              </span>
-              
-              {/* Priority dot */}
-              <div className={`w-2 h-2 rounded-full ml-auto ${
-                task.priority === 'high' ? 'bg-gradient-to-r from-violet-500 to-indigo-500 shadow-lg shadow-violet-200' :
-                task.priority === 'medium' ? 'bg-gradient-to-r from-indigo-500 to-blue-500 shadow-lg shadow-indigo-200' : 
-                'bg-gray-300'
-              }`} />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Progress section */}
-        <div className="mt-5 pt-4">
-          <div className="flex items-center justify-between text-xs text-slate-600 mb-2">
-            <span>Progress</span>
-            <span>33%</span>
-          </div>
-          <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: "33%" }}
-              transition={{ duration: 1.5, delay: 3 }}
-            />
-          </div>
-        </div>
-
-        {/* Decorative elements */}
-        <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-br from-violet-200 to-indigo-200 rounded-full opacity-60" />
-        <div className="absolute -top-1 -left-1 w-4 h-4 bg-gradient-to-br from-blue-200 to-violet-200 rounded-full opacity-40" />
-      </div>
-    </motion.div>
-  );
 }
 
 export default function About() {
@@ -492,8 +390,16 @@ export default function About() {
         </motion.div>
       </motion.div>
 
-      {/* Elegant Task Card */}
-      <ElegantTaskCard />
+      {/* Sidebar Components */}
+      <motion.div
+        className="absolute top-1/4 right-8 md:right-12 w-72 hidden lg:block space-y-4"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 2 }}
+      >
+        <LocationStatus />
+        <TerminalThemeToggle />
+      </motion.div>
     </main>
   );
 }
