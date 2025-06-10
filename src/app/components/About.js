@@ -1,85 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, MousePointer, Code2, Star } from 'lucide-react';
 import LocationStatus from './LocationStatus';
 import TerminalThemeToggle from './TerminalThemeToggle';
-
-// Professional animated background elements
-const ProfessionalBackground = () => {
-  return (
-    <>
-      {/* Animated Grid Lines */}
-      <div className="absolute inset-0 opacity-[0.03]">
-        <svg className="w-full h-full">
-          <defs>
-            <pattern id="professionalGrid" width="100" height="100" patternUnits="userSpaceOnUse">
-              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="currentColor" strokeWidth="1" className="text-violet-600"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#professionalGrid)" />
-        </svg>
-      </div>
-
-      {/* Subtle Moving Lines */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-violet-400/20 to-transparent"
-          style={{ top: '20%', left: '-50%' }}
-          animate={{ x: ['0%', '50%'] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-indigo-400/15 to-transparent"
-          style={{ top: '60%', left: '-50%' }}
-          animate={{ x: ['0%', '50%'] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear", delay: 5 }}
-        />
-        <motion.div
-          className="absolute w-[200%] h-px bg-gradient-to-r from-transparent via-blue-400/10 to-transparent"
-          style={{ top: '80%', left: '-50%' }}
-          animate={{ x: ['0%', '50%'] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear", delay: 10 }}
-        />
-      </div>
-
-      {/* Geometric Corner Elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 opacity-5">
-        <motion.div
-          className="w-full h-full border border-violet-400 rounded-full"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute top-12 right-12 w-72 h-72 border border-indigo-400 rounded-full"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
-
-      <div className="absolute bottom-0 left-0 w-80 h-80 opacity-5">
-        <motion.div
-          className="w-full h-full border border-blue-400"
-          style={{ clipPath: 'polygon(0 0, 100% 50%, 0 100%)' }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
-
-      {/* Subtle Dots Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <svg className="w-full h-full">
-          <defs>
-            <pattern id="dotPattern" width="50" height="50" patternUnits="userSpaceOnUse">
-              <circle cx="25" cy="25" r="1" fill="currentColor" className="text-violet-600" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#dotPattern)" />
-        </svg>
-      </div>
-    </>
-  );
-};
 
 // Shuffle/decode effect component
 function ShuffleText({ text, duration = 2000, className = "" }) {
@@ -116,6 +40,284 @@ function ShuffleText({ text, duration = 2000, className = "" }) {
   return <span className={className}>{display}</span>;
 }
 
+// Matrix-style background
+const MatrixBackground = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      {/* Animated circuit board pattern */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.15]" viewBox="0 0 1000 1000">
+        <defs>
+          <pattern id="circuitGrid" width="120" height="120" patternUnits="userSpaceOnUse">
+            <motion.path 
+              d="M 120 0 L 0 0 0 120 M 60 0 L 60 120 M 0 60 L 120 60" 
+              fill="none" 
+              stroke="url(#circuitGradient)" 
+              strokeWidth="1"
+              initial={{ pathLength: 0, opacity: 0.3 }}
+              animate={{ pathLength: 1, opacity: [0.3, 0.8, 0.3] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.circle 
+              cx="0" cy="0" r="3" fill="url(#circuitGradient)"
+              animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity, delay: Math.random() * 2 }}
+            />
+            <motion.circle 
+              cx="60" cy="60" r="2" fill="url(#nodeGradient)"
+              animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.9, 0.4] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: Math.random() * 1.5 }}
+            />
+            <motion.circle 
+              cx="120" cy="120" r="3" fill="url(#circuitGradient)"
+              animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: Math.random() * 2.5 }}
+            />
+          </pattern>
+          <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#06b6d4" />
+            <stop offset="50%" stopColor="#0891b2" />
+            <stop offset="100%" stopColor="#67e8f9" />
+          </linearGradient>
+          <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#0284c7" />
+            <stop offset="100%" stopColor="#0891b2" />
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#circuitGrid)" />
+      </svg>
+
+      {/* Flowing data streams */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.12]">
+        <motion.path
+          d="M0,100 Q200,50 400,150 T800,100 Q1000,80 1200,120"
+          stroke="url(#streamGradient1)"
+          strokeWidth="2"
+          fill="none"
+          strokeDasharray="10 5"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -100 }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.path
+          d="M0,300 Q300,250 600,350 T1200,300"
+          stroke="url(#streamGradient2)"
+          strokeWidth="1.5"
+          fill="none"
+          strokeDasharray="8 4"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -80 }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
+        />
+        <motion.path
+          d="M0,500 Q250,450 500,550 T1000,500"
+          stroke="url(#streamGradient3)"
+          strokeWidth="1"
+          fill="none"
+          strokeDasharray="6 3"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -60 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 4 }}
+        />
+        <motion.path
+          d="M0,700 Q200,650 400,750 T800,700"
+          stroke="url(#streamGradient4)"
+          strokeWidth="1.5"
+          fill="none"
+          strokeDasharray="12 6"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -120 }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear", delay: 6 }}
+        />
+        <defs>
+          <linearGradient id="streamGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#06b6d4" />
+            <stop offset="50%" stopColor="#0891b2" />
+            <stop offset="100%" stopColor="#67e8f9" />
+          </linearGradient>
+          <linearGradient id="streamGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0284c7" />
+            <stop offset="100%" stopColor="#06b6d4" />
+          </linearGradient>
+          <linearGradient id="streamGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0891b2" />
+            <stop offset="100%" stopColor="#67e8f9" />
+          </linearGradient>
+          <linearGradient id="streamGradient4" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#67e8f9" />
+            <stop offset="100%" stopColor="#0284c7" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      {/* Complex geometric morphing shapes */}
+      <motion.div
+        className="absolute top-20 right-20 w-96 h-96 opacity-[0.08]"
+        animate={{
+          rotate: [0, 360],
+          scale: [1, 1.3, 1],
+          x: [0, -50, 50, 0],
+          y: [0, 30, -30, 0],
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{
+          background: 'conic-gradient(from 0deg, #06b6d4, #0891b2, #67e8f9, #0284c7, #06b6d4)',
+          clipPath: 'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)',
+        }}
+      />
+
+      {/* Matrix-style falling code */}
+      <motion.div
+        className="absolute bottom-32 left-32 w-80 h-80 opacity-[0.06]"
+        animate={{
+          rotate: [0, -180, -360],
+          scale: [1, 1.4, 1],
+          x: [0, 40, -40, 0],
+          y: [0, -20, 20, 0],
+        }}
+        transition={{
+          duration: 35,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 5,
+        }}
+        style={{
+          background: 'radial-gradient(circle, #0891b2 10%, #06b6d4 30%, transparent 70%)',
+          clipPath: 'polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%)',
+        }}
+      />
+
+      {/* Digital particles */}
+      <motion.div
+        className="absolute top-1/3 left-1/5 w-6 h-6 bg-cyan-400/40 rounded-sm"
+        animate={{
+          x: [0, 100, -50, 80, 0],
+          y: [0, -80, 60, -40, 0],
+          rotate: [0, 90, 180, 270, 360],
+          scale: [1, 1.5, 0.8, 1.2, 1],
+          opacity: [0.4, 0.8, 0.3, 0.7, 0.4],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-4 h-4 border-2 border-blue-400/30"
+        style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+        animate={{
+          rotate: [0, 360],
+          x: [0, -60, 40, 0],
+          y: [0, 50, -30, 0],
+          scale: [1, 1.3, 0.7, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3,
+        }}
+      />
+
+      {/* Hexagonal tech elements */}
+      <motion.div
+        className="absolute top-1/2 right-1/3 w-8 h-8 opacity-[0.1]"
+        style={{
+          background: 'linear-gradient(135deg, #0891b2, #06b6d4)',
+          clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
+        }}
+        animate={{
+          rotate: [0, 120, 240, 360],
+          x: [0, 60, -30, 0],
+          y: [0, -40, 70, 0],
+          scale: [1, 1.6, 0.6, 1],
+        }}
+        transition={{
+          duration: 28,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 8,
+        }}
+      />
+
+      {/* Glowing orbs with complex motion */}
+      <motion.div
+        className="absolute top-1/4 left-2/3 w-32 h-32 rounded-full opacity-[0.06]"
+        style={{
+          background: 'radial-gradient(circle, #67e8f9 20%, #06b6d4 60%, transparent 80%)',
+        }}
+        animate={{
+          scale: [1, 1.8, 1.2, 1],
+          x: [0, -80, 60, 0],
+          y: [0, 40, -60, 0],
+          opacity: [0.06, 0.12, 0.04, 0.06],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 10,
+        }}
+      />
+    </div>
+  );
+};
+
+// Fixed Floating particles component
+const FloatingParticles = () => {
+  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
+
+  useEffect(() => {
+    // Set dimensions after component mounts (client-side only)
+    if (typeof window !== 'undefined') {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+
+      const handleResize = () => {
+        setDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      };
+
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(12)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-2 h-2 bg-cyan-400/25 rounded-full"
+          initial={{
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
+          }}
+          animate={{
+            x: Math.random() * dimensions.width,
+            y: Math.random() * dimensions.height,
+          }}
+          transition={{
+            duration: Math.random() * 35 + 30,
+            repeat: Infinity,
+            ease: "linear",
+            delay: Math.random() * 5,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export default function About() {
   const [displayText, setDisplayText] = useState('');
   const fullText = "I build bold, thoughtful digital products.";
@@ -149,256 +351,366 @@ export default function About() {
   }, []);
 
   return (
-    <main className="relative flex flex-col items-start justify-center min-h-screen px-8 pt-32 overflow-hidden">
-      {/* Beautiful Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-violet-50 to-indigo-50" />
+    <main className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
       
-      {/* Animated Mesh Background */}
-      <div className="absolute inset-0">
-        <svg className="w-full h-full opacity-30" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="meshGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.3" />
-              <stop offset="50%" stopColor="#6366f1" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.3" />
-            </linearGradient>
-            <linearGradient id="meshGradient2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
-              <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.2" />
-              <stop offset="100%" stopColor="#6366f1" stopOpacity="0.3" />
-            </linearGradient>
-          </defs>
-          
-          <motion.path
-            d="M0,20 Q25,10 50,20 T100,20 L100,80 Q75,90 50,80 T0,80 Z"
-            fill="url(#meshGradient1)"
-            animate={{
-              d: [
-                "M0,20 Q25,10 50,20 T100,20 L100,80 Q75,90 50,80 T0,80 Z",
-                "M0,30 Q25,20 50,30 T100,30 L100,70 Q75,60 50,70 T0,70 Z",
-                "M0,20 Q25,10 50,20 T100,20 L100,80 Q75,90 50,80 T0,80 Z"
-              ]
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          
-          <motion.path
-            d="M0,60 Q25,70 50,60 T100,60 L100,40 Q75,30 50,40 T0,40 Z"
-            fill="url(#meshGradient2)"
-            animate={{
-              d: [
-                "M0,60 Q25,70 50,60 T100,60 L100,40 Q75,30 50,40 T0,40 Z",
-                "M0,50 Q25,40 50,50 T100,50 L100,30 Q75,40 50,30 T0,30 Z",
-                "M0,60 Q25,70 50,60 T100,60 L100,40 Q75,30 50,40 T0,40 Z"
-              ]
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2
-            }}
-          />
-        </svg>
-      </div>
-
-      {/* Floating Orbs */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-violet-200/40 via-indigo-200/30 to-transparent rounded-full blur-3xl"
-          animate={{
-            x: [0, 100, -50, 0],
-            y: [0, -50, 50, 0],
-            scale: [1, 1.2, 0.8, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tr from-blue-200/40 via-indigo-200/30 to-transparent rounded-full blur-3xl"
-          animate={{
-            x: [0, -80, 60, 0],
-            y: [0, 60, -40, 0],
-            scale: [1, 0.8, 1.3, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 5
-          }}
-        />
-
-        <motion.div
-          className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-indigo-200/30 via-violet-200/20 to-transparent rounded-full blur-2xl"
-          animate={{
-            x: [0, 40, -30, 0],
-            y: [0, -30, 30, 0],
-            scale: [1, 1.1, 0.9, 1],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 8
-          }}
-        />
-      </div>
-
-      {/* Professional Background Elements */}
-      <ProfessionalBackground />
-
-      {/* Decorative Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
-        <svg className="w-full h-full">
-          <defs>
-            <pattern id="decorativeGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-violet-400"/>
-              <circle cx="0" cy="0" r="1.5" fill="currentColor" className="text-indigo-300" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#decorativeGrid)" />
-        </svg>
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10">
-        {/* Hero Text */}
-        <motion.h1 
-          className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-4"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <span className="text-slate-700">
-            <ShuffleText text="HELLO, I'M " duration={1600} />
-          </span>
-          <span className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent">
-            <ShuffleText text="YAKSH" duration={1200} />
-          </span>
-        </motion.h1>
-
-        {/* Subheading */}
-        <motion.p 
-          className="max-w-xl text-lg md:text-2xl text-slate-600 mb-8 leading-relaxed"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          {displayText}
-        </motion.p>
-
-        {/* Clean CTA Button */}
-        <motion.div
-          className="relative"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <motion.a
-            href="#contact"
-            className="inline-flex items-center gap-3 bg-white/90 backdrop-blur-sm text-slate-700 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl border border-white/50 transition-all duration-300 hover:bg-white hover:shadow-2xl hover:border-violet-200"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <motion.div
-              animate={{ 
-                rotate: [0, 15, -15, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ 
-                duration: 2, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <Sparkles className="w-5 h-5 text-violet-600" />
-            </motion.div>
-            <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
-              Get Started
-            </span>
-            <motion.div
-              className="text-blue-600"
-              animate={{ x: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <ArrowRight className="w-5 h-5" />
-            </motion.div>
-          </motion.a>
-        </motion.div>
-      </div>
-
-      {/* Elegant Status Bar */}
+      {/* Sophisticated Dark Animated Background */}
+      <MatrixBackground />
+      
+      {/* Dark theme floating orbs */}
       <motion.div
-        className="fixed bottom-8 left-8 right-8 md:left-auto md:right-8 md:w-80"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
-      >
-        <div className="relative bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl px-6 py-4 shadow-xl shadow-violet-100/50">
-          <div className="flex items-center gap-3">
-            <motion.div 
-              className="w-2 h-2 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-full"
-              animate={{ 
-                scale: [1, 1.3, 1], 
-                opacity: [1, 0.7, 1] 
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            <motion.span
-              key={currentFactIndex}
-              className="text-sm text-slate-600 font-medium"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.5 }}
-            >
-              {funFacts[currentFactIndex]}
-            </motion.span>
+        className="absolute w-[700px] h-[700px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(8, 145, 178, 0.06) 40%, transparent 70%)',
+          top: '-20%',
+          right: '-15%',
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          x: [0, 50, 0],
+          y: [0, -40, 0],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      <motion.div
+        className="absolute w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(14, 116, 144, 0.1) 0%, rgba(6, 182, 212, 0.05) 40%, transparent 70%)',
+          bottom: '-15%',
+          left: '-12%',
+        }}
+        animate={{
+          scale: [1, 1.3, 1],
+          x: [0, -30, 0],
+          y: [0, 30, 0],
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 12,
+        }}
+      />
+
+      <FloatingParticles />
+
+      {/* Content Container */}
+      <div className="relative z-10 min-h-screen flex items-center">
+        <div className="container mx-auto px-8 py-20">
+          
+          {/* Main Content */}
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              
+              {/* Left - Hero Content */}
+              <div className="space-y-8">
+                
+                {/* Status Badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-800/80 backdrop-blur-lg border border-gray-700/50 shadow-lg">
+                    <motion.div 
+                      className="w-3 h-3 bg-emerald-400 rounded-full"
+                      animate={{ 
+                        scale: [1, 1.2, 1],
+                        opacity: [1, 0.7, 1] 
+                      }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                    <span className="text-sm font-semibold text-gray-200 tracking-wide">Available for Projects</span>
+                    <Star className="w-4 h-4 text-amber-400" />
+                  </div>
+                </motion.div>
+
+                {/* Main Heading */}
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.85] text-white">
+                    <div className="mb-4">
+                      <span className="inline-block">
+                        <ShuffleText text="HELLO" duration={1200} />
+                      </span>
+                      <motion.span
+                        className="inline-block ml-4 text-4xl"
+                        animate={{ rotate: [0, 14, -14, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                      >
+                        👋
+                      </motion.span>
+                    </div>
+                    <div className="relative">
+                      <span className="text-white">I'M </span>
+                      <span className="relative">
+                        <span 
+                          className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent"
+                          style={{ 
+                            filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.3))',
+                          }}
+                        >
+                          <ShuffleText text="YAKSH" duration={1600} />
+                        </span>
+                      </span>
+                    </div>
+                  </h1>
+                </motion.div>
+
+                {/* Subtitle with typewriter */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  className="relative"
+                >
+                  <p className="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-2xl">
+                    {displayText}
+                    <motion.span
+                      className="inline-block w-1 h-6 bg-cyan-400 ml-1"
+                      animate={{ opacity: [0, 1, 0] }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    />
+                  </p>
+                </motion.div>
+
+                {/* CTA Buttons */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  className="flex flex-col sm:flex-row gap-4 pt-4"
+                >
+                  <motion.a
+                    href="#contact"
+                    className="group relative overflow-hidden inline-flex items-center gap-3 bg-white text-black px-8 py-5 rounded-2xl font-bold text-lg transition-all duration-500"
+                    whileHover={{ 
+                      scale: 1.02, 
+                      y: -3,
+                      boxShadow: "0 20px 40px rgba(255,255,255,0.1)"
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: "0%" }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <span className="relative z-10">Let's Create Magic</span>
+                    <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </motion.a>
+
+                  <motion.a
+                    href="#projects"
+                    className="group inline-flex items-center gap-3 bg-gray-800/60 backdrop-blur-lg text-gray-200 px-8 py-5 rounded-2xl font-bold text-lg border border-gray-700/60 shadow-lg transition-all duration-300"
+                    whileHover={{ 
+                      scale: 1.02, 
+                      y: -3,
+                      backgroundColor: "rgba(31,41,55,0.8)",
+                      boxShadow: "0 20px 40px rgba(6,182,212,0.15)"
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Code2 className="w-5 h-5 text-cyan-400" />
+                    <span>Explore Work</span>
+                    <motion.div
+                      className="w-2 h-2 bg-cyan-400 rounded-full"
+                      animate={{ scale: [1, 1.5, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  </motion.a>
+                </motion.div>
+              </div>
+
+              {/* Right - Status Cards */}
+              <div className="space-y-6 lg:pl-8">
+                
+                <motion.div
+                  initial={{ opacity: 0, x: 50, scale: 0.95 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 1 }}
+                  className="transform hover:scale-105 transition-all duration-300"
+                >
+                  <LocationStatus />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 50, scale: 0.95 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 1.2 }}
+                  className="transform hover:scale-105 transition-all duration-300"
+                >
+                  <TerminalThemeToggle />
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 50, scale: 0.95 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 1.4 }}
+                  className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 to-gray-900/95 backdrop-blur-xl shadow-xl border border-gray-700/60 p-6 transform hover:scale-105 transition-all duration-300 group"
+                >
+                  {/* Animated border glow */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+                  
+                  {/* Background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.02] via-blue-500/[0.03] to-purple-500/[0.02]" />
+                  
+                  {/* Matrix-style grid overlay */}
+                  <div className="absolute inset-0 opacity-[0.03]">
+                    <svg className="w-full h-full">
+                      <defs>
+                        <pattern id="statusGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="1" className="text-cyan-400"/>
+                        </pattern>
+                      </defs>
+                      <rect width="100%" height="100%" fill="url(#statusGrid)" />
+                    </svg>
+                  </div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-5">
+                      {/* Enhanced icon with multiple effects */}
+                      <div className="relative">
+                        <motion.div
+                          className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center border border-cyan-500/30"
+                          animate={{ 
+                            boxShadow: [
+                              "0 0 0px rgba(6, 182, 212, 0.3)",
+                              "0 0 20px rgba(6, 182, 212, 0.5)",
+                              "0 0 0px rgba(6, 182, 212, 0.3)"
+                            ]
+                          }}
+                          transition={{ 
+                            duration: 2, 
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        >
+                          <motion.div
+                            animate={{ 
+                              rotate: [0, 360],
+                              scale: [1, 1.1, 1]
+                            }}
+                            transition={{ 
+                              duration: 4, 
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                          >
+                            <Sparkles className="w-4 h-4 text-cyan-400" />
+                          </motion.div>
+                        </motion.div>
+                        
+                        {/* Orbiting particles */}
+                        <motion.div
+                          className="absolute inset-0"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                        >
+                          <div className="absolute w-1 h-1 bg-cyan-400/60 rounded-full" style={{ top: '-2px', left: '50%', transform: 'translateX(-50%)' }} />
+                          <div className="absolute w-1 h-1 bg-blue-400/60 rounded-full" style={{ bottom: '-2px', left: '50%', transform: 'translateX(-50%)' }} />
+                        </motion.div>
+                      </div>
+
+                      {/* Enhanced header text */}
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-gray-300 tracking-wider text-sm">CURRENTLY</span>
+                        <motion.div
+                          className="w-2 h-2 bg-cyan-400 rounded-full"
+                          animate={{ 
+                            scale: [1, 1.3, 1],
+                            opacity: [0.7, 1, 0.7] 
+                          }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Enhanced fact display */}
+                    <div className="relative">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={currentFactIndex}
+                          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                          exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
+                          className="relative"
+                        >
+                          <p className="text-white font-bold text-lg leading-relaxed">
+                            {funFacts[currentFactIndex]}
+                          </p>
+                          
+                          {/* Subtle text glow */}
+                          <p 
+                            className="absolute inset-0 text-cyan-400/20 font-bold text-lg leading-relaxed blur-sm"
+                            aria-hidden="true"
+                          >
+                            {funFacts[currentFactIndex]}
+                          </p>
+                        </motion.div>
+                      </AnimatePresence>
+                      
+                      {/* Progress indicator */}
+                      <div className="mt-4 flex gap-1">
+                        {funFacts.map((_, index) => (
+                          <motion.div
+                            key={index}
+                            className={`h-1 rounded-full transition-all duration-300 ${
+                              index === currentFactIndex 
+                                ? 'bg-cyan-400 w-8' 
+                                : 'bg-gray-600/50 w-2'
+                            }`}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: index * 0.1 }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Beautiful Scroll Indicator */}
+      {/* Scroll Indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
+        transition={{ duration: 1, delay: 2 }}
       >
         <motion.div
-          className="flex flex-col items-center gap-2 text-slate-400"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center gap-3 text-gray-400"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
         >
-          <span className="text-xs uppercase tracking-wider font-medium">Explore</span>
-          <div className="w-0.5 h-8 bg-gradient-to-b from-violet-300 to-indigo-300 rounded-full">
+          <span className="text-xs uppercase tracking-widest font-semibold">Discover More</span>
+          <div className="w-px h-12 bg-gradient-to-b from-gray-600 via-cyan-400 to-transparent relative">
             <motion.div
-              className="w-full bg-gradient-to-b from-violet-500 to-blue-500 rounded-full"
-              animate={{ height: ["0%", "70%", "0%"] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute top-0 w-full bg-gradient-to-b from-cyan-400 to-blue-400 rounded-full"
+              animate={{ height: ["0%", "80%", "0%"] }}
+              transition={{ duration: 3, repeat: Infinity }}
             />
           </div>
+          <motion.div
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <MousePointer className="w-4 h-4" />
+          </motion.div>
         </motion.div>
-      </motion.div>
-
-      {/* Sidebar Components */}
-      <motion.div
-        className="absolute top-1/4 right-8 md:right-12 w-72 hidden lg:block space-y-4"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 2 }}
-      >
-        <LocationStatus />
-        <TerminalThemeToggle />
       </motion.div>
     </main>
   );
