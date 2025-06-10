@@ -103,18 +103,137 @@ const Projects = () => {
     })
   };
 
+  // Background matching homepage style
+  const ProjectsBackground = () => {
+    return (
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Simple grid pattern */}
+        <div className="absolute inset-0 opacity-[0.06]">
+          <svg className="w-full h-full">
+            <defs>
+              <pattern id="projectsGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-cyan-600"/>
+                <circle cx="0" cy="0" r="1.5" fill="currentColor" className="text-cyan-500" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#projectsGrid)" />
+          </svg>
+        </div>
+
+        {/* Flowing lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.12]">
+          <motion.path
+            d="M0,150 Q300,100 600,200 T1200,150"
+            stroke="#06b6d4"
+            strokeWidth="1.5"
+            fill="none"
+            strokeDasharray="12 6"
+            initial={{ strokeDashoffset: 0 }}
+            animate={{ strokeDashoffset: -120 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.path
+            d="M0,350 Q250,300 500,400 T1000,350"
+            stroke="#0891b2"
+            strokeWidth="1"
+            fill="none"
+            strokeDasharray="8 4"
+            initial={{ strokeDashoffset: 0 }}
+            animate={{ strokeDashoffset: -80 }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
+          />
+          <motion.path
+            d="M0,550 Q400,500 800,600 T1600,550"
+            stroke="#67e8f9"
+            strokeWidth="1"
+            fill="none"
+            strokeDasharray="10 5"
+            initial={{ strokeDashoffset: 0 }}
+            animate={{ strokeDashoffset: -100 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 4 }}
+          />
+        </svg>
+
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                x: [0, Math.random() * 100 - 50],
+                y: [0, Math.random() * 100 - 50],
+                opacity: [0.3, 0.8, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: Math.random() * 15 + 10,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section
       id="projects"
-      className="relative min-h-screen flex flex-col justify-center items-center px-2 md:px-0 py-20 bg-white"
+      className="relative min-h-screen flex flex-col justify-center items-center px-2 md:px-0 py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800"
     >
-      {/* Subtle Gradient Glow - matching Skills component */}
+      {/* Background matching homepage */}
+      <ProjectsBackground />
+      
+      {/* Dark theme floating orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-2/3 h-1/2 left-1/3 top-0 bg-gradient-to-br from-indigo-100 via-blue-100 to-transparent blur-3xl rounded-full opacity-60" />
-        <div className="absolute w-1/2 h-1/2 right-0 bottom-0 bg-gradient-to-tl from-purple-100 via-fuchsia-100 to-transparent blur-2xl rounded-full opacity-60" />
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]"
+          style={{
+            background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)',
+            top: '-10%',
+            right: '-10%',
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        <motion.div
+          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.06]"
+          style={{
+            background: 'radial-gradient(circle, #0891b2 0%, transparent 70%)',
+            bottom: '-8%',
+            left: '-8%',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -20, 0],
+            y: [0, 20, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 10,
+          }}
+        />
       </div>
 
-      {/* Header - matching Skills component style */}
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -123,16 +242,21 @@ const Projects = () => {
         className="mb-10 flex flex-col items-center relative z-20"
       >
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 select-none">
-          <span className="bg-gradient-to-r from-indigo-600 via-purple-500 to-fuchsia-500 bg-clip-text text-transparent animate-gradient-x drop-shadow-[0_1px_1.5px_rgba(80,0,150,0.10)]">
+          <span 
+            className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent"
+            style={{ 
+              filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.3))',
+            }}
+          >
             PROJECTS
           </span>
         </h2>
-        <p className="text-lg md:text-xl text-gray-500 font-medium">
+        <p className="text-lg md:text-xl text-gray-300 font-medium">
           Crafting digital experiences that push boundaries.
         </p>
       </motion.div>
 
-      {/* Category Filter - refined design */}
+      {/* Category Filter */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -148,8 +272,8 @@ const Projects = () => {
               onClick={() => setSelectedCategory(category.id)}
               className={`group relative px-5 py-2.5 rounded-full font-medium transition-all duration-300 border backdrop-blur-sm ${
                 selectedCategory === category.id
-                  ? 'bg-gray-900 text-white border-gray-900 shadow-lg'
-                  : 'bg-white/80 text-gray-600 border-gray-200 hover:border-gray-300 hover:text-gray-800 hover:bg-white/90'
+                  ? 'bg-cyan-600 text-white border-cyan-500 shadow-lg shadow-cyan-500/25'
+                  : 'bg-gray-800/60 text-gray-300 border-gray-600/50 hover:border-cyan-500/50 hover:text-cyan-300 hover:bg-gray-700/60'
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
@@ -163,21 +287,21 @@ const Projects = () => {
         })}
       </motion.div>
 
-      {/* Projects Grid - Glass Card Container */}
+      {/* Projects Grid */}
       <motion.div
-        className="relative w-full max-w-6xl bg-white/90 rounded-3xl p-6 md:p-8 shadow-xl border border-gray-200 backdrop-blur-lg"
+        className="relative w-full max-w-6xl bg-gray-800/60 backdrop-blur-lg rounded-3xl p-6 md:p-8 shadow-xl border border-gray-700/50"
         initial={{ opacity: 0, y: 50, scale: 0.98 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-indigo-300/20 via-fuchsia-300/15 to-purple-200/20 blur-lg pointer-events-none" />
+        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-cyan-500/10 via-blue-500/8 to-cyan-400/10 blur-lg pointer-events-none" />
         
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
-              className="group relative bg-white/60 rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200/50 backdrop-blur-sm"
+              className="group relative bg-gray-900/60 backdrop-blur-sm rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 border border-gray-700/60"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -185,12 +309,12 @@ const Projects = () => {
               variants={cardVariants}
               whileHover={{ 
                 scale: 1.02,
-                boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
+                boxShadow: "0 10px 25px rgba(6,182,212,0.15)"
               }}
             >
               {/* Featured Badge */}
               {project.featured && (
-                <div className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-semibold rounded-full shadow-sm">
+                <div className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-semibold rounded-full shadow-sm">
                   FEATURED
                 </div>
               )}
@@ -202,51 +326,67 @@ const Projects = () => {
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                 
-                {/* Action Button - Only External Link */}
+                {/* Action Button */}
                 <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                   <motion.a
                     href={project.liveUrl}
-                    className="flex items-center justify-center w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-colors duration-200 shadow-lg"
+                    className="flex items-center justify-center w-8 h-8 bg-gray-800/90 backdrop-blur-sm rounded-full hover:bg-gray-700 transition-colors duration-200 shadow-lg"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <ExternalLink className="w-4 h-4 text-gray-700" />
+                    <ExternalLink className="w-4 h-4 text-cyan-400" />
                   </motion.a>
                 </div>
               </div>
 
               {/* Project Content */}
               <div className="p-5 relative z-10">
-                <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition-colors duration-300">
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-2">
+                <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2">
                   {project.description}
                 </p>
                 
-                {/* Technologies - Show All */}
+                {/* Technologies */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-2.5 py-1 bg-gray-100/80 text-gray-600 text-xs rounded-full border border-gray-200/60 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-600 transition-colors duration-200 backdrop-blur-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                  {project.technologies.map((tech, techIndex) => {
+                    // Define neon color variants
+                    const neonColors = [
+                      'bg-green-500/20 text-green-400 border-green-500/40 hover:bg-green-500/30 hover:text-green-300 hover:shadow-green-500/25',
+                      'bg-yellow-500/20 text-yellow-400 border-yellow-500/40 hover:bg-yellow-500/30 hover:text-yellow-300 hover:shadow-yellow-500/25',
+                      'bg-red-500/20 text-red-400 border-red-500/40 hover:bg-red-500/30 hover:text-red-300 hover:shadow-red-500/25',
+                      'bg-cyan-500/20 text-cyan-400 border-cyan-500/40 hover:bg-cyan-500/30 hover:text-cyan-300 hover:shadow-cyan-500/25',
+                      'bg-purple-500/20 text-purple-400 border-purple-500/40 hover:bg-purple-500/30 hover:text-purple-300 hover:shadow-purple-500/25',
+                      'bg-orange-500/20 text-orange-400 border-orange-500/40 hover:bg-orange-500/30 hover:text-orange-300 hover:shadow-orange-500/25',
+                    ];
+                    
+                    const colorClass = neonColors[techIndex % neonColors.length];
+                    
+                    return (
+                      <motion.span
+                        key={techIndex}
+                        className={`px-2.5 py-1 text-xs rounded-full border transition-all duration-200 backdrop-blur-sm font-medium hover:shadow-lg ${colorClass}`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {tech}
+                      </motion.span>
+                    );
+                  })}
                 </div>
 
-                {/* Action Bar - Only GitHub Link */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200/60">
+                {/* Action Bar */}
+                <div className="flex items-center justify-between pt-4 border-t border-gray-700/50">
                   <div className="flex items-center">
                     <a
                       href={project.githubUrl}
-                      className="flex items-center space-x-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors duration-200 font-medium"
+                      className="flex items-center space-x-1.5 text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-200 font-medium"
                     >
                       <Github className="w-3.5 h-3.5" />
-                      <span>Code</span>
+                      <span>Code  </span>
                     </a>
                   </div>
                 </div>
@@ -258,12 +398,12 @@ const Projects = () => {
         {/* Load More Button */}
         <div className="text-center mt-8">
           <motion.button 
-            className="group relative px-6 py-3 bg-gray-900 text-white rounded-full font-medium text-sm overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-900"
+            className="group relative px-6 py-3 bg-cyan-600 text-white rounded-full font-medium text-sm overflow-hidden transition-all duration-300 hover:shadow-lg shadow-cyan-500/25 border border-cyan-500"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
             <span className="relative z-10">Load More Projects</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
           </motion.button>
         </div>
       </motion.div>

@@ -55,7 +55,7 @@ export default function Contact() {
       text: "Drop me an email",
       href: "mailto:yaksh@example.com",
       icon: Mail,
-      color: "from-purple-500 to-purple-600"
+      color: "from-cyan-500 to-cyan-600"
     },
     {
       text: "Give me a call",
@@ -65,16 +65,135 @@ export default function Contact() {
     }
   ];
 
+  // Background matching homepage style
+  const ContactBackground = () => {
+    return (
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Simple grid pattern */}
+        <div className="absolute inset-0 opacity-[0.06]">
+          <svg className="w-full h-full">
+            <defs>
+              <pattern id="contactGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-cyan-600"/>
+                <circle cx="0" cy="0" r="1.5" fill="currentColor" className="text-cyan-500" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#contactGrid)" />
+          </svg>
+        </div>
+
+        {/* Flowing lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.12]">
+          <motion.path
+            d="M0,150 Q300,100 600,200 T1200,150"
+            stroke="#06b6d4"
+            strokeWidth="1.5"
+            fill="none"
+            strokeDasharray="12 6"
+            initial={{ strokeDashoffset: 0 }}
+            animate={{ strokeDashoffset: -120 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.path
+            d="M0,350 Q250,300 500,400 T1000,350"
+            stroke="#0891b2"
+            strokeWidth="1"
+            fill="none"
+            strokeDasharray="8 4"
+            initial={{ strokeDashoffset: 0 }}
+            animate={{ strokeDashoffset: -80 }}
+            transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
+          />
+          <motion.path
+            d="M0,550 Q400,500 800,600 T1600,550"
+            stroke="#67e8f9"
+            strokeWidth="1"
+            fill="none"
+            strokeDasharray="10 5"
+            initial={{ strokeDashoffset: 0 }}
+            animate={{ strokeDashoffset: -100 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 4 }}
+          />
+        </svg>
+
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                x: [0, Math.random() * 100 - 50],
+                y: [0, Math.random() * 100 - 50],
+                opacity: [0.3, 0.8, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: Math.random() * 15 + 10,
+                repeat: Infinity,
+                delay: Math.random() * 5,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <section className="relative min-h-screen bg-white">
-      {/* Subtle background */}
+    <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
+      {/* Background matching homepage */}
+      <ContactBackground />
+      
+      {/* Dark theme floating orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-1/3 h-1/3 right-0 top-0 bg-gradient-to-bl from-indigo-50 to-transparent rounded-full blur-3xl opacity-60" />
-        <div className="absolute w-1/4 h-1/4 left-0 bottom-0 bg-gradient-to-tr from-purple-50 to-transparent rounded-full blur-2xl opacity-60" />
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]"
+          style={{
+            background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)',
+            top: '-10%',
+            right: '-10%',
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        <motion.div
+          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.06]"
+          style={{
+            background: 'radial-gradient(circle, #0891b2 0%, transparent 70%)',
+            bottom: '-8%',
+            left: '-8%',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -20, 0],
+            y: [0, 20, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 10,
+          }}
+        />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-24">
-        {/* Header Section - Keep Original */}
+        {/* Header Section */}
         <div className="text-center mb-20">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -82,34 +201,39 @@ export default function Contact() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="mb-8"
           >
-            <p className="text-sm uppercase tracking-[0.2em] text-gray-500 mb-6 font-medium">
+            <p className="text-sm uppercase tracking-[0.2em] text-gray-400 mb-6 font-medium">
               READY TO COLLABORATE?
             </p>
             <div className="relative inline-block">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-gray-900">
-                LET'S<span className="text-indigo-600">*</span>BUILD
+              <h1 
+                className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-white"
+                style={{ 
+                  filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.2))',
+                }}
+              >
+                LET'S<span className="text-cyan-400">*</span>BUILD
               </h1>
               <motion.div
                 className="absolute -right-12 top-0"
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
-                <div className="w-8 h-8 text-indigo-600/40">✦</div>
+                <div className="w-8 h-8 text-cyan-400/40">✦</div>
               </motion.div>
             </div>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-gray-900 mb-2">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-white mb-2">
               SOMETHING
             </h1>
             <div className="relative inline-block">
-              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-gray-900">
+              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tight leading-[0.85] text-white">
                 GREAT!
               </h1>
               <motion.div
-                className="absolute -right-8 -top-4 w-16 h-16 border-4 border-gray-900 rounded-full flex items-center justify-center"
+                className="absolute -right-8 -top-4 w-16 h-16 border-4 border-white rounded-full flex items-center justify-center"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                <span className="text-black font-bold">©</span>
+                <span className="text-cyan-500 font-bold">©</span>
               </motion.div>
             </div>
           </motion.div>
@@ -118,7 +242,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
+            className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed"
           >
             Have an idea? Let's bring it to life. I'm always excited to work on new projects and collaborate with fellow creators.
           </motion.p>
@@ -126,7 +250,7 @@ export default function Contact() {
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start max-w-6xl mx-auto">
-          {/* Modern Contact Form */}
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -135,13 +259,13 @@ export default function Contact() {
           >
             <div className="relative">
               {/* Glass morphism background */}
-              <div className="absolute inset-0 bg-white/60 backdrop-blur-lg rounded-3xl border border-white/20 shadow-xl"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/40 to-white/20 rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gray-800/60 backdrop-blur-lg rounded-3xl border border-gray-700/40 shadow-xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800/80 via-gray-900/40 to-gray-800/20 rounded-3xl"></div>
               
               <div className="relative z-10 p-8 md:p-12">
                 <div className="mb-8">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Send me a message</h2>
-                  <p className="text-gray-600">I'd love to hear from you. Drop me a line below.</p>
+                  <h2 className="text-2xl font-bold text-white mb-2">Send me a message</h2>
+                  <p className="text-gray-400">I'd love to hear from you. Drop me a line below.</p>
                 </div>
                 
                 <div className="space-y-6">
@@ -156,9 +280,9 @@ export default function Contact() {
                         onFocus={() => setFocusedField('name')}
                         onBlur={() => setFocusedField(null)}
                         placeholder=" "
-                        className="peer w-full px-4 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-2xl focus:outline-none focus:border-indigo-500 transition-all duration-300 text-gray-900 placeholder-transparent"
+                        className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 text-white placeholder-transparent"
                       />
-                      <label className="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-indigo-600 peer-focus:bg-white">
+                      <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
                         Full Name
                       </label>
                     </div>
@@ -175,9 +299,9 @@ export default function Contact() {
                         onFocus={() => setFocusedField('email')}
                         onBlur={() => setFocusedField(null)}
                         placeholder=" "
-                        className="peer w-full px-4 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-2xl focus:outline-none focus:border-indigo-500 transition-all duration-300 text-gray-900 placeholder-transparent"
+                        className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 text-white placeholder-transparent"
                       />
-                      <label className="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-indigo-600 peer-focus:bg-white">
+                      <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
                         Email Address
                       </label>
                     </div>
@@ -194,9 +318,9 @@ export default function Contact() {
                         onBlur={() => setFocusedField(null)}
                         placeholder=" "
                         rows={5}
-                        className="peer w-full px-4 py-4 bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-2xl focus:outline-none focus:border-indigo-500 transition-all duration-300 resize-none text-gray-900 placeholder-transparent"
+                        className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 resize-none text-white placeholder-transparent"
                       />
-                      <label className="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-gray-600 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-indigo-600 peer-focus:bg-white">
+                      <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
                         Your Message
                       </label>
                     </div>
@@ -206,12 +330,12 @@ export default function Contact() {
                   <motion.button
                     onClick={handleSubmit}
                     disabled={isSubmitting || !formData.name || !formData.email || !formData.message}
-                    className="relative group w-full bg-gray-900 text-white px-8 py-5 text-lg font-semibold rounded-2xl overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-8"
+                    className="relative group w-full bg-cyan-600 text-white px-8 py-5 text-lg font-semibold rounded-2xl overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-8 hover:shadow-lg hover:shadow-cyan-500/25"
                     whileHover={{ scale: isSubmitting || !formData.name || !formData.email || !formData.message ? 1 : 1.01 }}
                     whileTap={{ scale: isSubmitting || !formData.name || !formData.email || !formData.message ? 1 : 0.99 }}
                   >
                     <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      className="absolute inset-0 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       animate={{
                         backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                       }}
@@ -251,14 +375,14 @@ export default function Contact() {
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                        className="flex items-center gap-3 text-green-600 bg-green-50/80 backdrop-blur-sm p-4 rounded-2xl border border-green-200/60"
+                        className="flex items-center gap-3 text-green-400 bg-green-500/10 backdrop-blur-sm p-4 rounded-2xl border border-green-500/30"
                       >
                         <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                           <Check className="w-5 h-5 text-white" />
                         </div>
                         <div>
                           <span className="font-semibold">Message sent successfully!</span>
-                          <p className="text-sm text-green-600/80 mt-1">I'll get back to you within 24 hours.</p>
+                          <p className="text-sm text-green-400/80 mt-1">I'll get back to you within 24 hours.</p>
                         </div>
                       </motion.div>
                     )}
@@ -268,7 +392,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Modern Quick Links */}
+          {/* Quick Links */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -277,8 +401,8 @@ export default function Contact() {
           >
             <div className="space-y-6">
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Let's connect</h3>
-                <p className="text-gray-600">Choose your preferred way to reach out</p>
+                <h3 className="text-2xl font-bold text-white mb-2">Let's connect</h3>
+                <p className="text-gray-400">Choose your preferred way to reach out</p>
               </div>
               
               <div className="space-y-4">
@@ -294,7 +418,7 @@ export default function Contact() {
                     transition={{ delay: 0.8 + index * 0.1 }}
                     whileHover={{ scale: 1.02 }}
                   >
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-lg border border-white/20 p-5 transition-all duration-300 group-hover:shadow-lg">
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/80 to-gray-900/40 backdrop-blur-lg border border-gray-700/20 p-5 transition-all duration-300 group-hover:shadow-lg">
                       {/* Gradient overlay on hover */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${link.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
                       
@@ -306,34 +430,34 @@ export default function Contact() {
 
                         {/* Text */}
                         <div className="flex-1">
-                          <span className="text-gray-900 font-medium group-hover:text-gray-700 transition-colors duration-300">
+                          <span className="text-white font-medium group-hover:text-gray-300 transition-colors duration-300">
                             {link.text}
                           </span>
                         </div>
 
                         {/* Arrow */}
-                        <ArrowUpRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                        <ArrowUpRight className="w-5 h-5 text-gray-400 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                       </div>
                     </div>
                   </motion.a>
                 ))}
               </div>
 
-              {/* Status Card - Modern */}
+              {/* Status Card */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
-                className="mt-8 relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-50/80 to-purple-50/80 backdrop-blur-lg border border-indigo-100/50 p-6"
+                className="mt-8 relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 backdrop-blur-lg border border-cyan-500/20 p-6"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5"></div>
                 <div className="relative flex items-start gap-4">
                   <div className="flex-shrink-0">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Available for work</h4>
-                    <p className="text-gray-700 text-sm leading-relaxed">
+                    <h4 className="font-semibold text-white mb-2">Available for work</h4>
+                    <p className="text-gray-300 text-sm leading-relaxed">
                       Currently accepting new projects and collaborations. I typically respond within 24 hours.
                     </p>
                   </div>
