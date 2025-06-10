@@ -4,16 +4,17 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function TerminalThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true); // Default to dark
   const [isTyping, setIsTyping] = useState(false);
-  const [displayText, setDisplayText] = useState('> toggle-theme --mode=light');
+  const [displayText, setDisplayText] = useState('> toggle-theme --mode=dark'); // Default dark
   const [cursorVisible, setCursorVisible] = useState(true);
 
   useEffect(() => {
-    // Check current theme on mount
-    const currentTheme = document.documentElement.classList.contains('dark');
-    setIsDark(currentTheme);
-    setDisplayText(`> toggle-theme --mode=${currentTheme ? 'dark' : 'light'}`);
+    // Set dark theme as default on mount
+    document.documentElement.classList.add('dark');
+    document.documentElement.style.setProperty('--background', '#0a0a0a');
+    document.documentElement.style.setProperty('--foreground', '#ededed');
+    setDisplayText('> toggle-theme --mode=dark');
   }, []);
 
   useEffect(() => {

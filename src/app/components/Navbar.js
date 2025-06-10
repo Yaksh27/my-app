@@ -7,10 +7,10 @@ import { usePathname } from 'next/navigation';
 
 const links = [
   { name: "ABOUT", href: "/" },            
-  { name: "EXPERIENCE", href: "/experience" },
-  { name: "SKILLS", href: "/skills" },
-  { name: "PROJECTS", href: "/projects" },
-  { name: "CONTACT", href: "/contact" },
+  { name: "EXPERIENCE", href: "/#experience" },
+  { name: "SKILLS", href: "/#skills" },
+  { name: "PROJECTS", href: "/#projects" },
+  { name: "CONTACT", href: "/#contact" },
 ];
 
 export default function Navbar() {
