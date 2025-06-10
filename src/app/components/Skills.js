@@ -57,7 +57,6 @@ const SKILLS = [
       { name: "Render", label: "Render", color: "grey" },
     ]
   }
-
 ];
 
 const iconVariants = {
@@ -65,6 +64,86 @@ const iconVariants = {
   visible: i => ({
     opacity: 1, scale: 1, y: 0, transition: { delay: i * 0.06, type: "spring", stiffness: 400, damping: 20 }
   })
+};
+
+// Background matching homepage style
+const SkillsBackground = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      {/* Simple grid pattern */}
+      <div className="absolute inset-0 opacity-[0.06]">
+        <svg className="w-full h-full">
+          <defs>
+            <pattern id="skillsGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-cyan-600"/>
+              <circle cx="0" cy="0" r="1.5" fill="currentColor" className="text-cyan-500" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#skillsGrid)" />
+        </svg>
+      </div>
+
+      {/* Flowing lines */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.12]">
+        <motion.path
+          d="M0,150 Q300,100 600,200 T1200,150"
+          stroke="#06b6d4"
+          strokeWidth="1.5"
+          fill="none"
+          strokeDasharray="12 6"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -120 }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.path
+          d="M0,350 Q250,300 500,400 T1000,350"
+          stroke="#0891b2"
+          strokeWidth="1"
+          fill="none"
+          strokeDasharray="8 4"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -80 }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 2 }}
+        />
+        <motion.path
+          d="M0,550 Q400,500 800,600 T1600,550"
+          stroke="#67e8f9"
+          strokeWidth="1"
+          fill="none"
+          strokeDasharray="10 5"
+          initial={{ strokeDashoffset: 0 }}
+          animate={{ strokeDashoffset: -100 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 4 }}
+        />
+      </svg>
+
+      {/* Floating particles */}
+      <div className="absolute inset-0">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              x: [0, Math.random() * 100 - 50],
+              y: [0, Math.random() * 100 - 50],
+              opacity: [0.3, 0.8, 0.3],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: Math.random() * 15 + 10,
+              repeat: Infinity,
+              delay: Math.random() * 5,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default function Skills() {
@@ -76,41 +155,84 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative min-h-screen flex flex-col justify-center items-center px-2 md:px-0 py-20 bg-white"
+      className="relative min-h-screen flex flex-col justify-center items-center px-2 md:px-0 py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800"
     >
-      {/* Subtle Gradient Glow */}
+      {/* Background matching homepage */}
+      <SkillsBackground />
+      
+      {/* Dark theme floating orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-2/3 h-1/2 left-1/3 top-0 bg-gradient-to-br from-indigo-100 via-blue-100 to-transparent blur-3xl rounded-full opacity-60" />
-        <div className="absolute w-1/2 h-1/2 right-0 bottom-0 bg-gradient-to-tl from-purple-100 via-fuchsia-100 to-transparent blur-2xl rounded-full opacity-60" />
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]"
+          style={{
+            background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)',
+            top: '-10%',
+            right: '-10%',
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        <motion.div
+          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.06]"
+          style={{
+            background: 'radial-gradient(circle, #0891b2 0%, transparent 70%)',
+            bottom: '-8%',
+            left: '-8%',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, -20, 0],
+            y: [0, 20, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 10,
+          }}
+        />
       </div>
 
-            <motion.div
+      {/* Header */}
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         viewport={{ once: true }}
         className="mb-10 flex flex-col items-center relative z-20"
-        >
+      >
         <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 select-none">
-            <span className="bg-gradient-to-r from-indigo-600 via-purple-500 to-fuchsia-500 bg-clip-text text-transparent animate-gradient-x drop-shadow-[0_1px_1.5px_rgba(80,0,150,0.10)]">
+          <span 
+            className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent"
+            style={{ 
+              filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.3))',
+            }}
+          >
             SKILLS
-            </span>
+          </span>
         </h2>
-        <p className="text-lg md:text-xl text-gray-500 font-medium">
-            What I have learnt until now.
+        <p className="text-lg md:text-xl text-gray-300 font-medium">
+          What I have learnt until now.
         </p>
-        </motion.div>
-
-
+      </motion.div>
 
       {/* Glass Card */}
       <motion.div
-        className="relative w-full max-w-4xl bg-white/90 rounded-3xl p-4 md:p-12 shadow-xl border border-gray-200 backdrop-blur-lg"
+        className="relative w-full max-w-4xl bg-gray-800/60 backdrop-blur-lg rounded-3xl p-4 md:p-12 shadow-xl border border-gray-700/50"
         initial={{ opacity: 0, y: 50, scale: 0.98 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-indigo-300/20 via-fuchsia-300/15 to-purple-200/20 blur-lg pointer-events-none" />
+        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-cyan-500/10 via-blue-500/8 to-cyan-400/10 blur-lg pointer-events-none" />
 
         <div className="relative z-10 grid grid-cols-7 gap-y-6">
           {/* Category Labels */}
@@ -120,7 +242,7 @@ export default function Skills() {
                 key={category}
                 className="min-h-[56px] flex items-center"
               >
-                <span className="text-[1.25rem] font-bold tracking-wide text-gray-500 opacity-95 select-none">
+                <span className="text-[1.25rem] font-bold tracking-wide text-gray-300 opacity-95 select-none">
                   {category}
                 </span>
               </div>
@@ -129,7 +251,7 @@ export default function Skills() {
 
           {/* Divider */}
           <div className="col-span-1 flex flex-col justify-center">
-            <div className="h-full w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent mx-auto" />
+            <div className="h-full w-px bg-gradient-to-b from-transparent via-cyan-500/30 to-transparent mx-auto" />
           </div>
 
           {/* Icon Grid */}
@@ -151,18 +273,19 @@ export default function Skills() {
                       viewport={{ once: true }}
                       custom={i}
                       variants={iconVariants}
-                      whileHover={{ scale: 1.18, boxShadow: `0 2px 14px ${icon.color}33` }}
+                      whileHover={{ scale: 1.18, boxShadow: `0 4px 20px ${icon.color}33` }}
                       whileFocus={{ scale: 1.12 }}
                       transition={{ type: "spring", stiffness: 380, damping: 18 }}
                       style={{
-                        background: hovered === icon.name ? `${icon.color}18` : "transparent",
+                        background: hovered === icon.name ? `${icon.color}15` : "rgba(55, 65, 81, 0.3)",
                         transition: "background 0.18s",
                         minWidth: 48,
                         minHeight: 48,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        margin: "0 auto"
+                        margin: "0 auto",
+                        border: `1px solid ${hovered === icon.name ? `${icon.color}40` : 'rgba(75, 85, 99, 0.3)'}`,
                       }}
                       onMouseEnter={() => setHovered(icon.name)}
                       onMouseLeave={() => setHovered(null)}
@@ -175,16 +298,16 @@ export default function Skills() {
                         width={38}
                         height={38}
                         style={{
-                          filter: hovered === icon.name ? "drop-shadow(0 0 12px #b8c3f5)" : undefined,
+                          filter: hovered === icon.name ? `drop-shadow(0 0 8px ${icon.color}66)` : undefined,
                           transition: "filter 0.15s",
                           borderRadius: "10px",
-                          background: "#f6f7fa",
+                          background: hovered === icon.name ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.05)",
                           padding: 3,
                         }}
                         onError={e => {
                           e.target.onerror = null;
                           e.target.src =
-                            "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='38' height='38'><rect width='100%' height='100%' rx='8' fill='%23e2e8f0'/><text x='50%' y='54%' font-size='17' fill='%23999' text-anchor='middle' dominant-baseline='middle'>?</text></svg>";
+                            "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='38' height='38'><rect width='100%' height='100%' rx='8' fill='%23374151'/><text x='50%' y='54%' font-size='17' fill='%23d1d5db' text-anchor='middle' dominant-baseline='middle'>?</text></svg>";
                         }}
                       />
                       {/* Tooltip */}
@@ -192,7 +315,7 @@ export default function Skills() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={hovered === icon.name ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                         transition={{ duration: 0.18 }}
-                        className="pointer-events-none absolute bottom-[-2.3rem] left-1/2 -translate-x-1/2 px-3 py-1 rounded-xl text-xs font-semibold text-gray-700 bg-white/90 shadow-md whitespace-nowrap border border-gray-200"
+                        className="pointer-events-none absolute bottom-[-2.3rem] left-1/2 -translate-x-1/2 px-3 py-1 rounded-xl text-xs font-semibold text-white bg-gray-800/90 shadow-md whitespace-nowrap border border-gray-600/50"
                         style={{ zIndex: 10 }}
                       >
                         {icon.label}
