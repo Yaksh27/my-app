@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const cdnIcon = (name, color = "") =>
@@ -68,6 +68,44 @@ const iconVariants = {
 
 // Background matching homepage style
 const SkillsBackground = () => {
+  const [isClient, setIsClient] = useState(false);
+  const [particles, setParticles] = useState([]);
+
+  useEffect(() => {
+    setIsClient(true);
+    
+    // Generate fixed positions for particles to avoid hydration mismatch
+    const particleData = Array.from({ length: 6 }, (_, i) => ({
+      id: i,
+      left: (i * 16.67) % 100, // Deterministic positioning
+      top: (i * 25) % 100,
+      duration: 10 + (i * 2.5),
+      delay: i * 0.8,
+      xMovement: 25 - (i * 8.33),
+      yMovement: 25 - (i * 8.33)
+    }));
+    
+    setParticles(particleData);
+  }, []);
+
+  if (!isClient) {
+    return (
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.06]">
+          <svg className="w-full h-full">
+            <defs>
+              <pattern id="skillsGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-cyan-600"/>
+                <circle cx="0" cy="0" r="1.5" fill="currentColor" className="text-cyan-500" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#skillsGrid)" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Simple grid pattern */}
@@ -117,26 +155,26 @@ const SkillsBackground = () => {
         />
       </svg>
 
-      {/* Floating particles */}
+      {/* Floating particles - now deterministic */}
       <div className="absolute inset-0">
-        {[...Array(6)].map((_, i) => (
+        {particles.map((particle) => (
           <motion.div
-            key={`particle-${i}`}
+            key={`particle-${particle.id}`}
             className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
             }}
             animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
+              x: [0, particle.xMovement],
+              y: [0, particle.yMovement],
               opacity: [0.3, 0.8, 0.3],
               scale: [1, 1.5, 1],
             }}
             transition={{
-              duration: Math.random() * 15 + 10,
+              duration: particle.duration,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: particle.delay,
               ease: "easeInOut",
             }}
           />

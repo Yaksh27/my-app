@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, Phone, Github, Linkedin, Send, ArrowUpRight, Check } from "lucide-react";
 
 export default function Contact() {
@@ -67,6 +67,44 @@ export default function Contact() {
 
   // Background matching homepage style
   const ContactBackground = () => {
+    const [isClient, setIsClient] = useState(false);
+    const [particles, setParticles] = useState([]);
+
+    useEffect(() => {
+      setIsClient(true);
+      
+      // Generate fixed positions for particles to avoid hydration mismatch
+      const particleData = Array.from({ length: 6 }, (_, i) => ({
+        id: i,
+        left: (i * 16.67) % 100, // Deterministic positioning
+        top: (i * 25) % 100,
+        duration: 10 + (i * 2.5),
+        delay: i * 0.8,
+        xMovement: 25 - (i * 8.33),
+        yMovement: 25 - (i * 8.33)
+      }));
+      
+      setParticles(particleData);
+    }, []);
+
+    if (!isClient) {
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.06]">
+            <svg className="w-full h-full">
+              <defs>
+                <pattern id="contactGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+                  <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="1" className="text-cyan-600"/>
+                  <circle cx="0" cy="0" r="1.5" fill="currentColor" className="text-cyan-500" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#contactGrid)" />
+            </svg>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="absolute inset-0 overflow-hidden">
         {/* Simple grid pattern */}
@@ -116,26 +154,26 @@ export default function Contact() {
           />
         </svg>
 
-        {/* Floating particles */}
+        {/* Floating particles - now deterministic */}
         <div className="absolute inset-0">
-          {[...Array(6)].map((_, i) => (
+          {particles.map((particle) => (
             <motion.div
-              key={`particle-${i}`}
+              key={`particle-${particle.id}`}
               className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
               animate={{
-                x: [0, Math.random() * 100 - 50],
-                y: [0, Math.random() * 100 - 50],
+                x: [0, particle.xMovement],
+                y: [0, particle.yMovement],
                 opacity: [0.3, 0.8, 0.3],
                 scale: [1, 1.5, 1],
               }}
               transition={{
-                duration: Math.random() * 15 + 10,
+                duration: particle.duration,
                 repeat: Infinity,
-                delay: Math.random() * 5,
+                delay: particle.delay,
                 ease: "easeInOut",
               }}
             />
@@ -146,23 +184,23 @@ export default function Contact() {
   };
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
+    <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 overflow-hidden">
       {/* Background matching homepage */}
       <ContactBackground />
       
-      {/* Dark theme floating orbs */}
+      {/* Dark theme floating orbs - contained within viewport */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]"
+          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.08]"
           style={{
             background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)',
-            top: '-10%',
-            right: '-10%',
+            top: '-5%',
+            right: '-5%',
           }}
           animate={{
             scale: [1, 1.2, 1],
-            x: [0, 30, 0],
-            y: [0, -20, 0],
+            x: [0, 20, 0],
+            y: [0, -15, 0],
           }}
           transition={{
             duration: 25,
@@ -172,16 +210,16 @@ export default function Contact() {
         />
         
         <motion.div
-          className="absolute w-[400px] h-[400px] rounded-full opacity-[0.06]"
+          className="absolute w-[300px] h-[300px] rounded-full opacity-[0.06]"
           style={{
             background: 'radial-gradient(circle, #0891b2 0%, transparent 70%)',
-            bottom: '-8%',
-            left: '-8%',
+            bottom: '-5%',
+            left: '-5%',
           }}
           animate={{
             scale: [1, 1.3, 1],
-            x: [0, -20, 0],
-            y: [0, 20, 0],
+            x: [0, -15, 0],
+            y: [0, 15, 0],
           }}
           transition={{
             duration: 30,
@@ -233,7 +271,7 @@ export default function Contact() {
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                <span className="text-cyan-500 font-bold">©</span>
+                <span className="text-white font-bold">©</span>
               </motion.div>
             </div>
           </motion.div>

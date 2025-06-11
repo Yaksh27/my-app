@@ -4,10 +4,17 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function LocationStatus() {
-  const [currentTime, setCurrentTime] = useState('');
+  const [currentTime, setCurrentTime] = useState('--:--:--');
   const [blinkVisible, setBlinkVisible] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     const updateTime = () => {
       const now = new Date();
       const istTime = new Intl.DateTimeFormat('en-US', {
@@ -32,7 +39,7 @@ export default function LocationStatus() {
       clearInterval(timeInterval);
       clearInterval(blinkInterval);
     };
-  }, []);
+  }, [isClient]);
 
   return (
     <motion.div

@@ -5,12 +5,19 @@ import { ArrowRight, Sparkles, MousePointer, Code2, Star } from 'lucide-react';
 import LocationStatus from './LocationStatus';
 import TerminalThemeToggle from './TerminalThemeToggle';
 
-// Shuffle/decode effect component
+// Shuffle/decode effect component - Fixed for hydration
 function ShuffleText({ text, duration = 2000, className = "" }) {
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState(text); // Start with final text
+  const [isClient, setIsClient] = useState(false);
   const chars = "ABCDEFGHIJKLMNO@#$%^&*PQRSTUVWXYZ0123456789!";
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return; // Only run on client
+    
     let frame = 0;
     let interval;
     const revealCount = text.length;
@@ -35,13 +42,38 @@ function ShuffleText({ text, duration = 2000, className = "" }) {
     }, 40);
 
     return () => clearInterval(interval);
-  }, [text, duration]);
+  }, [text, duration, isClient]);
 
   return <span className={className}>{display}</span>;
 }
 
-// Matrix-style background
+// Matrix-style background - Fixed for hydration
 const MatrixBackground = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    // Static server version
+    return (
+      <div className="absolute inset-0 overflow-hidden">
+        <svg className="absolute inset-0 w-full h-full opacity-[0.15]" viewBox="0 0 1000 1000">
+          <defs>
+            <pattern id="circuitGrid" width="120" height="120" patternUnits="userSpaceOnUse">
+              <path d="M 120 0 L 0 0 0 120 M 60 0 L 60 120 M 0 60 L 120 60" fill="none" stroke="#06b6d4" strokeWidth="1"/>
+              <circle cx="0" cy="0" r="3" fill="#06b6d4"/>
+              <circle cx="60" cy="60" r="2" fill="#0891b2"/>
+              <circle cx="120" cy="120" r="3" fill="#06b6d4"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#circuitGrid)" />
+        </svg>
+      </div>
+    );
+  }
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Animated circuit board pattern */}
@@ -60,17 +92,17 @@ const MatrixBackground = () => {
             <motion.circle 
               cx="0" cy="0" r="3" fill="url(#circuitGradient)"
               animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity, delay: Math.random() * 2 }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
             />
             <motion.circle 
               cx="60" cy="60" r="2" fill="url(#nodeGradient)"
               animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0.9, 0.4] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: Math.random() * 1.5 }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: 1 }}
             />
             <motion.circle 
               cx="120" cy="120" r="3" fill="url(#circuitGradient)"
               animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: Math.random() * 2.5 }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: 1.5 }}
             />
           </pattern>
           <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -190,7 +222,7 @@ const MatrixBackground = () => {
         }}
       />
 
-      {/* Digital particles */}
+      {/* Digital particles - Fixed positions */}
       <motion.div
         className="absolute top-1/3 left-1/5 w-6 h-6 bg-cyan-400/40 rounded-sm"
         animate={{
@@ -268,49 +300,51 @@ const MatrixBackground = () => {
   );
 };
 
-// Fixed Floating particles component
+// Fixed Floating particles component - No more Math.random() during render
 const FloatingParticles = () => {
-  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
+  const [isClient, setIsClient] = useState(false);
+  const [particles, setParticles] = useState([]);
 
   useEffect(() => {
-    // Set dimensions after component mounts (client-side only)
-    if (typeof window !== 'undefined') {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-
-      const handleResize = () => {
-        setDimensions({
-          width: window.innerWidth,
-          height: window.innerHeight
-        });
-      };
-
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
+    setIsClient(true);
+    
+    // Generate deterministic particles after client mount
+    const particleData = Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      initialX: (i * 100) % 1200, // Deterministic positioning
+      initialY: (i * 67) % 800,
+      targetX: ((i + 5) * 100) % 1200,
+      targetY: ((i + 3) * 67) % 800,
+      duration: 30 + (i * 5),
+      delay: i * 0.5,
+    }));
+    
+    setParticles(particleData);
   }, []);
+
+  if (!isClient) {
+    return <div className="absolute inset-0 overflow-hidden pointer-events-none" />;
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(12)].map((_, i) => (
+      {particles.map((particle) => (
         <motion.div
-          key={i}
+          key={particle.id}
           className="absolute w-2 h-2 bg-cyan-400/25 rounded-full"
           initial={{
-            x: Math.random() * dimensions.width,
-            y: Math.random() * dimensions.height,
+            x: particle.initialX,
+            y: particle.initialY,
           }}
           animate={{
-            x: Math.random() * dimensions.width,
-            y: Math.random() * dimensions.height,
+            x: particle.targetX,
+            y: particle.targetY,
           }}
           transition={{
-            duration: Math.random() * 35 + 30,
+            duration: particle.duration,
             repeat: Infinity,
             ease: "linear",
-            delay: Math.random() * 5,
+            delay: particle.delay,
           }}
         />
       ))}
@@ -320,17 +354,8 @@ const FloatingParticles = () => {
 
 export default function About() {
   const [displayText, setDisplayText] = useState('');
+  const [isClient, setIsClient] = useState(false);
   const fullText = "I build bold, thoughtful digital products.";
-
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setDisplayText(fullText.slice(0, index));
-      index++;
-      if (index > fullText.length) clearInterval(interval);
-    }, 100);
-    return () => clearInterval(interval);
-  }, []);
 
   const funFacts = [
     "🎨 Crafting pixel-perfect experiences",
@@ -344,11 +369,29 @@ export default function About() {
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
+    let index = 0;
+    const interval = setInterval(() => {
+      setDisplayText(fullText.slice(0, index));
+      index++;
+      if (index > fullText.length) clearInterval(interval);
+    }, 100);
+    return () => clearInterval(interval);
+  }, [isClient]);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
     const factInterval = setInterval(() => {
       setCurrentFactIndex((prev) => (prev + 1) % funFacts.length);
     }, 3000);
     return () => clearInterval(factInterval);
-  }, []);
+  }, [isClient]);
 
   return (
     <main className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
@@ -472,12 +515,14 @@ export default function About() {
                   className="relative"
                 >
                   <p className="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-2xl">
-                    {displayText}
-                    <motion.span
-                      className="inline-block w-1 h-6 bg-cyan-400 ml-1"
-                      animate={{ opacity: [0, 1, 0] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    />
+                    {isClient ? displayText : fullText}
+                    {isClient && (
+                      <motion.span
+                        className="inline-block w-1 h-6 bg-cyan-400 ml-1"
+                        animate={{ opacity: [0, 1, 0] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      />
+                    )}
                   </p>
                 </motion.div>
 

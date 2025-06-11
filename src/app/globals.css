@@ -19,8 +19,30 @@
   }
 }
 
+/* Fix viewport tearing */
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
 body {
-  background: var(--background);
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  /* Add fallback background */
+  background: #0a0a0a;
+  overflow-x: hidden;
+}
+
+/* Ensure sections fully cover viewport */
+main, section {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Prevent scroll tearing */
+* {
+  box-sizing: border-box;
 }

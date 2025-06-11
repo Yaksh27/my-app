@@ -8,25 +8,36 @@ export default function TerminalThemeToggle() {
   const [isTyping, setIsTyping] = useState(false);
   const [displayText, setDisplayText] = useState('> toggle-theme --mode=dark'); // Default dark
   const [cursorVisible, setCursorVisible] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Set dark theme as default on mount
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
+    // Set dark theme as default on mount - only on client
     document.documentElement.classList.add('dark');
     document.documentElement.style.setProperty('--background', '#0a0a0a');
     document.documentElement.style.setProperty('--foreground', '#ededed');
     setDisplayText('> toggle-theme --mode=dark');
-  }, []);
+  }, [isClient]);
 
   useEffect(() => {
-    // Cursor blinking effect
+    if (!isClient) return;
+    
+    // Cursor blinking effect - only on client
     const interval = setInterval(() => {
       setCursorVisible(prev => !prev);
     }, 600);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isClient]);
 
   const typewriterEffect = (newText) => {
+    if (!isClient) return;
+    
     setIsTyping(true);
     let currentIndex = 0;
     const typingSpeed = 80;
@@ -43,12 +54,12 @@ export default function TerminalThemeToggle() {
   };
 
   const toggleTheme = () => {
-    if (isTyping) return;
+    if (isTyping || !isClient) return;
     
     const newTheme = !isDark;
     setIsDark(newTheme);
     
-    // Apply theme to document
+    // Apply theme to document - only on client
     if (newTheme) {
       document.documentElement.classList.add('dark');
       document.documentElement.style.setProperty('--background', '#0a0a0a');
@@ -87,7 +98,7 @@ export default function TerminalThemeToggle() {
           <span className="text-black font-bold">
             {displayText}
           </span>
-          {!isTyping && cursorVisible && (
+          {!isTyping && cursorVisible && isClient && (
             <motion.span
               className="ml-1 text-black font-bold"
               initial={{ opacity: 0 }}
