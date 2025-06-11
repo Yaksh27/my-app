@@ -46,3 +46,15 @@ main, section {
 * {
   box-sizing: border-box;
 }
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Optional: Custom smooth scrolling with more control */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

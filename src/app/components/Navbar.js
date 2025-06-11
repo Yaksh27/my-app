@@ -6,35 +6,82 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const links = [
-  { name: "ABOUT", href: "/" },            
-  { name: "EXPERIENCE", href: "/#experience" },
-  { name: "SKILLS", href: "/#skills" },
-  { name: "PROJECTS", href: "/#projects" },
-  { name: "CONTACT", href: "/#contact" },
+  { name: "ABOUT", href: "/#about", section: "about" },            
+  { name: "EXPERIENCE", href: "/#experience", section: "experience" },
+  { name: "SKILLS", href: "/#skills", section: "skills" },
+  { name: "PROJECTS", href: "/#projects", section: "projects" },
+  { name: "CONTACT", href: "/#contact", section: "contact" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [shufflingText, setShufflingText] = useState({});
+  const [activeSection, setActiveSection] = useState("about");
+  const [isClient, setIsClient] = useState(false);
 
-  // Get active link based on current pathname
-  const getActiveLinkName = () => {
-    const currentLink = links.find(link => link.href === pathname);
-    return currentLink ? currentLink.name : "ABOUT";
-  };
-
-  const [active, setActive] = useState(getActiveLinkName());
-
-  // Update active state when pathname changes
   useEffect(() => {
-    setActive(getActiveLinkName());
-  }, [pathname]);
+    setIsClient(true);
+  }, []);
+
+  // Scroll detection to update active section
+  useEffect(() => {
+    if (!isClient) return;
+
+    const handleScroll = () => {
+      const sections = links.map(link => link.section);
+      const scrollPosition = window.scrollY + 100; // Offset for better detection
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            setActiveSection(sections[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    // Initial check
+    handleScroll();
+
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Cleanup
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isClient]);
+
+  // Handle hash changes (when clicking navbar links)
+  useEffect(() => {
+    if (!isClient) return;
+
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && links.some(link => link.section === hash)) {
+        setActiveSection(hash);
+      }
+    };
+
+    // Initial check
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [isClient]);
 
   const shuffleText = (text, linkName) => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (!isClient) return;
+    
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZQWERTYUIOPASDFGHJKLZXCVBNM";
     let iterations = 0;
-    const maxIterations = 40;
+    const maxIterations = 70;
     
     const interval = setInterval(() => {
       setShufflingText(prev => ({
@@ -57,6 +104,25 @@ export default function Navbar() {
         setShufflingText(prev => ({ ...prev, [linkName]: text }));
       }
     }, 50);
+  };
+
+  const handleLinkClick = (e, sectionName) => {
+    e.preventDefault(); // Prevent default anchor behavior
+    setActiveSection(sectionName);
+    setIsMenuOpen(false);
+    
+    // Smooth scroll to section
+    const section = document.getElementById(sectionName);
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+      
+      // Update URL hash without jumping
+      history.replaceState(null, null, `#${sectionName}`);
+    }
   };
 
   return (
@@ -116,12 +182,13 @@ export default function Navbar() {
               href={link.href}
               className={`relative font-bold tracking-wider text-lg px-2 py-1 rounded 
                 transition-all duration-150
-                ${active === link.name ? "text-black" : "text-gray-600/70"}
+                ${activeSection === link.section ? "text-black" : "text-gray-600/70"}
                 `}
               style={{ fontFamily: "inherit" }}
               onMouseEnter={() => shuffleText(link.name, link.name)}
+              onClick={(e) => handleLinkClick(e, link.section)}
             >
-              {active === link.name && (
+              {activeSection === link.section && (
                 <motion.span
                   layoutId="underline"
                   className="absolute inset-0 bg-black/10 rounded transition-all"
@@ -190,10 +257,10 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className={`relative w-full text-left px-6 py-3 font-bold tracking-wider transition-all duration-150 block
-                  ${active === link.name ? "text-black bg-black/5" : "text-gray-600/70"}
+                  ${activeSection === link.section ? "text-black bg-black/5" : "text-gray-600/70"}
                   hover:bg-black/5`}
                 style={{ fontFamily: "inherit" }}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleLinkClick(e, link.section)}
                 onTouchStart={() => shuffleText(link.name, `mobile-${link.name}`)}
               >
                 <motion.div
@@ -207,7 +274,7 @@ export default function Navbar() {
                     delay: isMenuOpen ? index * 0.05 : 0,
                   }}
                 >
-                  {active === link.name && (
+                  {activeSection === link.section && (
                     <motion.div
                       className="absolute left-0 top-0 bottom-0 w-1 bg-black/30 rounded-r-full"
                       layoutId="mobileActiveIndicator"

@@ -467,7 +467,7 @@ export default function About() {
                       }}
                       transition={{ duration: 2, repeat: Infinity }}
                     />
-                    <span className="text-sm font-semibold text-gray-200 tracking-wide">Available for Projects</span>
+                    <span className="text-sm font-semibold text-gray-200 tracking-wide">Available to Work</span>
                     <Star className="w-4 h-4 text-amber-400" />
                   </div>
                 </motion.div>
