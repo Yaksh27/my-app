@@ -110,7 +110,7 @@ export default function TerminalThemeToggle() {
         </div>
         
         <div className="text-xs text-gray-500 mt-2">
-          <span className="text-green-600">✓</span> Click to toggle theme
+          <span className="text-green-600">✓</span> Click to toggle theme (coming soon...) 
         </div>
       </div>
     </motion.div>
