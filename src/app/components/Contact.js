@@ -41,25 +41,25 @@ export default function Contact() {
   const contactLinks = [
     {
       text: "Connect with me on LinkedIn",
-      href: "https://linkedin.com/in/yaksh",
+      href: "https://www.linkedin.com/in/yaksh-patel-iiitd/",
       icon: Linkedin,
       color: "from-blue-500 to-blue-600"
     },
     {
       text: "Follow my work on GitHub", 
-      href: "https://github.com/yaksh",
+      href: "https://github.com/Yaksh27",
       icon: Github,
       color: "from-gray-700 to-gray-900"
     },
     {
       text: "Drop me an email",
-      href: "mailto:yaksh@example.com",
+      href: "mailto:yaksh2400@gmail.com",
       icon: Mail,
       color: "from-cyan-500 to-cyan-600"
     },
     {
       text: "Give me a call",
-      href: "tel:+15551234567",
+      href: "tel: +91 7779020367",
       icon: Phone,
       color: "from-green-500 to-green-600"
     }
