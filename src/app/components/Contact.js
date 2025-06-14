@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Mail, Phone, Github, Linkedin, Send, ArrowUpRight, Check } from "lucide-react";
+import { Mail, Phone, Github, Linkedin, Send, ArrowUpRight, Check, AlertCircle } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -11,24 +11,87 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
   const [focusedField, setFocusedField] = useState(null);
 
-  const handleSubmit = async () => {
-    if (!formData.name || !formData.email || !formData.message) {
+  // Email validation function
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Form validation
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setError('Please enter your name');
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError('Please enter your email');
+      return false;
+    }
+    if (!isValidEmail(formData.email)) {
+      setError('Please enter a valid email address');
+      return false;
+    }
+    if (!formData.message.trim()) {
+      setError('Please enter your message');
+      return false;
+    }
+    if (formData.message.trim().length < 10) {
+      setError('Message should be at least 10 characters long');
+      return false;
+    }
+    return true;
+  };
+
+  // Handle form submission using EmailJS
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    
+    if (!validateForm()) {
       return;
     }
     
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    try {
+      // Using Formspree as primary method
+      const formspreeResponse = await fetch('https://formspree.io/f/xeokkajk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        })
+      });
+
+      if (formspreeResponse.ok) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        throw new Error('Failed to send email via Formspree');
+      }
+    } catch (formspreeError) {
+      console.log('Formspree failed, using mailto fallback:', formspreeError);
+      // Mailto fallback (Always works but opens email client)
+      const subject = encodeURIComponent(`Contact Form Message from ${formData.name}`);
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\n` +
+        `Email: ${formData.email}\n\n` +
+        `Message:\n${formData.message}`
+      );
+      window.location.href = `mailto:yaksh2400@gmail.com?subject=${subject}&body=${body}`;
+      setSubmitted(true);
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    }
     setIsSubmitting(false);
-    setSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
-    
-    // Reset success message after 3 seconds
-    setTimeout(() => setSubmitted(false), 3000);
   };
 
   const handleChange = (e) => {
@@ -36,6 +99,10 @@ export default function Contact() {
       ...prev,
       [e.target.name]: e.target.value
     }));
+    // Clear error when user starts typing
+    if (error) {
+      setError('');
+    }
   };
 
   const contactLinks = [
@@ -59,7 +126,7 @@ export default function Contact() {
     },
     {
       text: "Give me a call",
-      href: "tel: +91 7779020367",
+      href: "tel:+917779020367",
       icon: Phone,
       color: "from-green-500 to-green-600"
     }
@@ -306,126 +373,147 @@ export default function Contact() {
                   <p className="text-gray-400">I'd love to hear from you. Drop me a line below.</p>
                 </div>
                 
-                <div className="space-y-6">
-                  {/* Name Field */}
-                  <div className="group">
-                    <div className="relative">
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('name')}
-                        onBlur={() => setFocusedField(null)}
-                        placeholder=" "
-                        className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 text-white placeholder-transparent"
-                      />
-                      <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
-                        Full Name
-                      </label>
+                <form onSubmit={handleSubmit} autoComplete="off">
+                  <div className="space-y-6">
+                    {/* Name Field */}
+                    <div className="group">
+                      <div className="relative">
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          onFocus={() => setFocusedField('name')}
+                          onBlur={() => setFocusedField(null)}
+                          placeholder=" "
+                          className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 text-white placeholder-transparent"
+                          required
+                        />
+                        <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
+                          Full Name *
+                        </label>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Email Field */}
-                  <div className="group">
-                    <div className="relative">
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('email')}
-                        onBlur={() => setFocusedField(null)}
-                        placeholder=" "
-                        className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 text-white placeholder-transparent"
-                      />
-                      <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
-                        Email Address
-                      </label>
+                    {/* Email Field */}
+                    <div className="group">
+                      <div className="relative">
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          onFocus={() => setFocusedField('email')}
+                          onBlur={() => setFocusedField(null)}
+                          placeholder=" "
+                          className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 text-white placeholder-transparent"
+                          required
+                        />
+                        <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
+                          Email Address *
+                        </label>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Message Field */}
-                  <div className="group">
-                    <div className="relative">
-                      <textarea
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        onFocus={() => setFocusedField('message')}
-                        onBlur={() => setFocusedField(null)}
-                        placeholder=" "
-                        rows={5}
-                        className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 resize-none text-white placeholder-transparent"
-                      />
-                      <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
-                        Your Message
-                      </label>
+                    {/* Message Field */}
+                    <div className="group">
+                      <div className="relative">
+                        <textarea
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          onFocus={() => setFocusedField('message')}
+                          onBlur={() => setFocusedField(null)}
+                          placeholder=" "
+                          rows={5}
+                          className="peer w-full px-4 py-4 bg-gray-900/80 backdrop-blur-sm border-2 border-gray-600/60 rounded-2xl focus:outline-none focus:border-cyan-500 transition-all duration-300 resize-none text-white placeholder-transparent"
+                          required
+                          minLength={10}
+                        />
+                        <label className="absolute left-4 -top-2.5 bg-gray-900 px-2 text-sm font-medium text-gray-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-cyan-400 peer-focus:bg-gray-900">
+                          Your Message * (min. 10 characters)
+                        </label>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Submit Button */}
-                  <motion.button
-                    onClick={handleSubmit}
-                    disabled={isSubmitting || !formData.name || !formData.email || !formData.message}
-                    className="relative group w-full bg-cyan-600 text-white px-8 py-5 text-lg font-semibold rounded-2xl overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-8 hover:shadow-lg hover:shadow-cyan-500/25"
-                    whileHover={{ scale: isSubmitting || !formData.name || !formData.email || !formData.message ? 1 : 1.01 }}
-                    whileTap={{ scale: isSubmitting || !formData.name || !formData.email || !formData.message ? 1 : 0.99 }}
-                  >
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      animate={{
-                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                      style={{
-                        backgroundSize: "200% 100%",
-                      }}
-                    />
-                    
-                    <div className="relative flex items-center justify-center gap-3">
-                      {isSubmitting ? (
-                        <>
-                          <motion.div
-                            className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          />
-                          <span>Sending...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Send Message</span>
-                          <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                        </>
+                    {/* Error Message */}
+                    <AnimatePresence>
+                      {error && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="flex items-center gap-3 text-red-400 bg-red-500/10 backdrop-blur-sm p-4 rounded-2xl border border-red-500/30"
+                        >
+                          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                          <span className="text-sm">{error}</span>
+                        </motion.div>
                       )}
-                    </div>
-                  </motion.button>
+                    </AnimatePresence>
 
-                  {/* Success Message */}
-                  <AnimatePresence>
-                    {submitted && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                        className="flex items-center gap-3 text-green-400 bg-green-500/10 backdrop-blur-sm p-4 rounded-2xl border border-green-500/30"
-                      >
-                        <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                          <Check className="w-5 h-5 text-white" />
-                        </div>
-                        <div>
-                          <span className="font-semibold">Message sent successfully!</span>
-                          <p className="text-sm text-green-400/80 mt-1">I'll get back to you within 24 hours.</p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                    {/* Submit Button */}
+                    <motion.button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="relative group w-full bg-cyan-600 text-white px-8 py-5 text-lg font-semibold rounded-2xl overflow-hidden transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-8 hover:shadow-lg hover:shadow-cyan-500/25"
+                      whileHover={{ scale: isSubmitting ? 1 : 1.01 }}
+                      whileTap={{ scale: isSubmitting ? 1 : 0.99 }}
+                    >
+                      <motion.div 
+                        className="absolute inset-0 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        animate={{
+                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        style={{
+                          backgroundSize: "200% 100%",
+                        }}
+                      />
+                      
+                      <div className="relative flex items-center justify-center gap-3">
+                        {isSubmitting ? (
+                          <>
+                            <motion.div
+                              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            />
+                            <span>Sending...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>Send Message</span>
+                            <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                          </>
+                        )}
+                      </div>
+                    </motion.button>
+
+                    {/* Success Message */}
+                    <AnimatePresence>
+                      {submitted && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                          className="flex items-center gap-3 text-green-400 bg-green-500/10 backdrop-blur-sm p-4 rounded-2xl border border-green-500/30"
+                        >
+                          <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                            <Check className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <span className="font-semibold">Message sent successfully!</span>
+                            <p className="text-sm text-green-400/80 mt-1">I'll get back to you within 24 hours.</p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </form>
               </div>
             </div>
           </motion.div>
@@ -440,7 +528,7 @@ export default function Contact() {
             <div className="space-y-6">
               <div className="mb-8">
                 <h3 className="text-2xl font-bold text-white mb-2">Let's connect.</h3>
-                <p className="text-gray-400">Choose your preferred way to reach out :</p>
+                <p className="text-gray-400">Choose your preferred way to reach out:</p>
               </div>
               
               <div className="space-y-4">
