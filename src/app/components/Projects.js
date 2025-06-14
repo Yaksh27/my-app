@@ -6,70 +6,79 @@ import { motion } from 'framer-motion';
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // Mock project data - replace with your actual projects
+  // Updated project data with multiple categories support
   const projects = [
     {
       id: 1,
-      title: "Neural Network Visualizer",
-      description: "Interactive deep learning visualization tool with real-time training animations",
-      category: "machine-learning",
-      technologies: ["React", "D3.js", "TensorFlow.js", "Python"],
-      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
+      title: "Chat AI",
+      description: "Full-stack AI chat application with real-time messaging and image generation using Google Gemini API, featuring mobile-first design and secure backend architecture with tRPC and Supabase.",
+      categories: ["ai-ml", "web-app"],
+      technologies: ["Next.js", "TypeScript", "React", "Google Gemini API", "tRPC", "Supabase", "Auth0"],
+      image: "https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=600&h=400&fit=crop",
       liveUrl: "#",
       githubUrl: "#",
       featured: true
     },
     {
       id: 2,
-      title: "Crypto Trading Dashboard",
-      description: "Real-time cryptocurrency trading platform with advanced analytics",
-      category: "web-app",
-      technologies: ["Next.js", "TypeScript", "WebSocket", "Chart.js"],
-      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=400&fit=crop",
-      liveUrl: "#",
+      title: "Diabese",
+      description: "RAG-powered chatbot designed to assist elderly users managing chronic conditions with conversational UX, utilizing LLMs and advanced retrieval pipelines for enhanced clarity and support.",
+      categories: ["ai-ml", "web-app"],
+      technologies: ["Python", "React.js", "OpenAI API", "OCR", "Node.js", "MongoDB", "Express.js"],
+      image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop",
       githubUrl: "#",
       featured: true
     },
     {
       id: 3,
-      title: "AR Product Showcase",
-      description: "Augmented reality product visualization using WebXR",
-      category: "ar-vr",
-      technologies: ["Three.js", "WebXR", "React", "GSAP"],
-      image: "https://images.unsplash.com/photo-1592478411213-6153e4ebc696?w=600&h=400&fit=crop",
-      liveUrl: "#",
+      title: "Network Security",
+      description: "Enhanced community detection algorithm optimizing Greedy Modularity methods with 15-20% improved accuracy, featuring interactive data visualization platform for complex network analysis.",
+      categories: ["other"],
+      technologies: ["Python", "NetworkX", "Streamlit", "Graph Algorithms", "Data Visualization"],
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
       githubUrl: "#",
       featured: false
     },
     {
       id: 4,
-      title: "Smart Home IoT Hub",
-      description: "Centralized control system for IoT devices with voice commands",
-      category: "iot",
-      technologies: ["Node.js", "MongoDB", "MQTT", "React Native"],
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "AI Code Assistant",
-      description: "VS Code extension powered by GPT for intelligent code completion",
-      category: "ai-tools",
-      technologies: ["TypeScript", "OpenAI API", "VS Code API", "Node.js"],
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop",
+      title: "Training Recommender",
+      description: "Personalized workout and nutrition engine applying IR ranking + ML/NLP to match users with optimal routines and meal plans, exposed via RESTful APIs for seamless web integration.",
+      categories: ["web-app", "ai-ml"],
+      technologies: ["React.js", "Machine Learning", "NLP", "RESTful APIs", "JSON", "CSS", "MySQL"],
+      image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
       liveUrl: "#",
       githubUrl: "#",
       featured: true
     },
     {
+      id: 5,
+      title: "Dyslexia Screening",
+      description: "Four mobile-based AR checks in Unity for early dyslexia screening in children, featuring CNN trained on EMNIST dataset for on-screen alphabet drawing and identification.",
+      categories: ["ai-ml", "other"],
+      technologies: ["Unity3D", "C#", "Machine Learning", "CNN", "EMNIST", "AR"],
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop",
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: false
+    },
+    {
       id: 6,
-      title: "Blockchain Voting System",
-      description: "Decentralized voting platform ensuring transparency and security",
-      category: "blockchain",
-      technologies: ["Solidity", "Web3.js", "React", "Ethereum"],
-      image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&h=400&fit=crop",
+      title: "Tank Stars",
+      description: "Replica of the popular Tankstars mobile game built with libGDX and Java, implementing Object-Oriented Programming principles, fluid GUI, and comprehensive JUnit testing.",
+      categories: ["other"],
+      technologies: ["Java", "libGDX", "OOP", "JUnit", "GUI"],
+      image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: false
+    },
+    {
+      id: 7,
+      title: "NewsNet",
+      description: "Data-driven news aggregator providing users with preferred news articles in real-time, integrating multiple APIs and databases to fetch personalized content based on user preferences.",
+      categories: ["other"],
+      technologies: ["Python", "SQL", "APIs", "JSON", "Real-time Data"],
+      image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=400&fit=crop",
       liveUrl: "#",
       githubUrl: "#",
       featured: false
@@ -79,14 +88,13 @@ const Projects = () => {
   const categories = [
     { id: 'all', label: 'All Projects', icon: Sparkles },
     { id: 'web-app', label: 'Web Apps', icon: Code },
-    { id: 'machine-learning', label: 'ML/AI', icon: Zap },
-    { id: 'ar-vr', label: 'AR/VR', icon: Rocket },
-    { id: 'blockchain', label: 'Blockchain', icon: Star }
+    { id: 'ai-ml', label: 'AI/ML', icon: Zap },
+    { id: 'other', label: 'Other', icon: Rocket },
   ];
 
   const filteredProjects = selectedCategory === 'all' 
     ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+    : projects.filter(project => project.categories.includes(selectedCategory));
 
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.95, y: 30 },
@@ -384,7 +392,7 @@ const Projects = () => {
                 <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="text-gray-400 text-sm mb-4 leading-relaxed line-clamp-2">
+                <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                   {project.description}
                 </p>
                 
@@ -424,7 +432,7 @@ const Projects = () => {
                       className="flex items-center space-x-1.5 text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-200 font-medium"
                     >
                       <Github className="w-3.5 h-3.5" />
-                      <span>Code  </span>
+                      <span>Code</span>
                     </a>
                   </div>
                 </div>

@@ -439,8 +439,8 @@ export default function Contact() {
           >
             <div className="space-y-6">
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Let's connect</h3>
-                <p className="text-gray-400">Choose your preferred way to reach out</p>
+                <h3 className="text-2xl font-bold text-white mb-2">Let's connect.</h3>
+                <p className="text-gray-400">Choose your preferred way to reach out :</p>
               </div>
               
               <div className="space-y-4">

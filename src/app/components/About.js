@@ -690,7 +690,7 @@ export default function About() {
                           transition={{ duration: 0.6, ease: "easeOut" }}
                           className="relative"
                         >
-                          <p className="text-white font-bold text-lg leading-relaxed">
+                          <p className="text-white font-semibold leading-relaxed">
                             {funFacts[currentFactIndex]}
                           </p>
                           
