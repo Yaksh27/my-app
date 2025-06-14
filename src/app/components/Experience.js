@@ -4,24 +4,24 @@ import { useState, useEffect } from "react";
 import { ChevronDown, Calendar, MapPin, Users, TrendingUp, FileText } from "lucide-react";
 
 const experiences = [
-  {
-    title: "Frontend Developer",
-    company: "Speaking Warrior",
-    period: "April 2025 – June 2025",
-    logo: "🗣️",
-    description: "Built and launched the Speaking Warrior website using React, Vite, Tailwind CSS, and Framer Motion. Integrated APIs, developed an admin dashboard, and handled full-stack features for a seamless user and admin experience.",
-    details:
-      `• Built the entire website for Speaking Warrior using React, Vite, Tailwind CSS, and Framer Motion
-• Integrated and handled REST APIs for dynamic content and user management
-• Designed and implemented a custom admin dashboard for content and user control
-• Collaborated in a 2-member team to deliver the project end-to-end
-• Ensured responsive, accessible UI and smooth animations throughout the site`,
-    tech: ["React.js", "Vite", "Tailwind CSS", "Framer Motion", "REST API"],
-    impact: "50k+ users",
-    location: "Remote",
-    team: "2 members",
-    featured: false
-  },
+//   {
+//     title: "Frontend Developer",
+//     company: "Speaking Warrior",
+//     period: "April 2025 – June 2025",
+//     logo: "🗣️",
+//     description: "Built and launched the Speaking Warrior website using React, Vite, Tailwind CSS, and Framer Motion. Integrated APIs, developed an admin dashboard, and handled full-stack features for a seamless user and admin experience.",
+//     details:
+//       `• Built the entire website for Speaking Warrior using React, Vite, Tailwind CSS, and Framer Motion
+// • Integrated and handled REST APIs for dynamic content and user management
+// • Designed and implemented a custom admin dashboard for content and user control
+// • Collaborated in a 2-member team to deliver the project end-to-end
+// • Ensured responsive, accessible UI and smooth animations throughout the site`,
+//     tech: ["React.js", "Vite", "Tailwind CSS", "Framer Motion", "REST API"],
+//     impact: "1k+ users",
+//     location: "Remote",
+//     team: "2 members",
+//     featured: false
+//   },
   {
        title: "Student Researcher",
     company: "Creative Interfaces Lab, IIIT Delhi",
@@ -254,7 +254,7 @@ export default function Experience() {
               whileHover={{ scale: 1.05 }}
               className="text-center"
             >
-              <div className="text-4xl font-black text-white mb-2">10+</div>
+              <div className="text-4xl font-black text-white mb-2">7+</div>
               <div className="text-sm text-gray-400 uppercase tracking-wider">Technologies</div>
             </motion.div>
           </div>
