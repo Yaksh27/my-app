@@ -7,7 +7,7 @@ const experiences = [
   {
     title: "Frontend Developer",
     company: "Speaking Warrior",
-    period: "April 2024 – June 2024",
+    period: "April 2025 – June 2025",
     logo: "🗣️",
     description: "Built and launched the Speaking Warrior website using React, Vite, Tailwind CSS, and Framer Motion. Integrated APIs, developed an admin dashboard, and handled full-stack features for a seamless user and admin experience.",
     details:

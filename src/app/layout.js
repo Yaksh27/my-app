@@ -5,7 +5,7 @@ import { Space_Grotesk } from 'next/font/google';
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['700'] });
 
 export const metadata = {
-  title: 'Your Portfolio',
+      title: "Yaksh's Portfolio",
   description: "Yaksh's modern portfolio built with Next.js",
 };
 
