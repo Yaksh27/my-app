@@ -16,7 +16,7 @@ const experiences = [
 • Designed and implemented a custom admin dashboard for content and user control
 • Collaborated in a 2-member team to deliver the project end-to-end
 • Ensured responsive, accessible UI and smooth animations throughout the site`,
-    tech: ["React", "Vite", "Tailwind CSS", "Framer Motion", "REST API"],
+    tech: ["React.js", "Vite", "Tailwind CSS", "Framer Motion", "REST API"],
     impact: "50k+ users",
     location: "Remote",
     team: "2 members",
@@ -508,12 +508,12 @@ export default function Experience() {
               <motion.span
                 className="text-white font-bold text-sm ml-3 overflow-hidden whitespace-nowrap"
                 initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 0, x: -10 }} // Add this to ensure it starts hidden
                 whileHover={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1, duration: 0.2 }}
+                transition={{ duration: 0.2 }} // Remove the delay
               >
                 View Resume →
               </motion.span>
-              
               {/* Floating particles */}
               <motion.div
                 className="absolute -top-1 -right-1 w-2 h-2 bg-white/50 rounded-full"
@@ -548,7 +548,7 @@ export default function Experience() {
               whileHover={{ opacity: 0.8 }}
               transition={{ duration: 0.3 }}
             >
-              Hover to view resume
+              Hover to view and click my resume.
             </motion.p>
           </div>
         </motion.div>
