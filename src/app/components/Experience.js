@@ -247,21 +247,14 @@ export default function Experience() {
               whileHover={{ scale: 1.05 }}
               className="text-center"
             >
-              <div className="text-4xl font-black text-white mb-2">2+</div>
-              <div className="text-sm text-gray-400 uppercase tracking-wider">Years</div>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="text-center"
-            >
-              <div className="text-4xl font-black text-white mb-2">8+</div>
+              <div className="text-4xl font-black text-white mb-2">3+</div>
               <div className="text-sm text-gray-400 uppercase tracking-wider">Projects Built</div>
             </motion.div>
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="text-center"
             >
-              <div className="text-4xl font-black text-white mb-2">15+</div>
+              <div className="text-4xl font-black text-white mb-2">10+</div>
               <div className="text-sm text-gray-400 uppercase tracking-wider">Technologies</div>
             </motion.div>
           </div>
@@ -487,6 +480,7 @@ export default function Experience() {
               }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
+              onClick={() => window.open('https://drive.google.com/file/d/1em8KIseVSDuw4FcFmSSp-eJnfIJ1Hzhf/view', '_blank')}
             >
               {/* File icon */}
               <motion.div
@@ -508,9 +502,9 @@ export default function Experience() {
               <motion.span
                 className="text-white font-bold text-sm ml-3 overflow-hidden whitespace-nowrap"
                 initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 0, x: -10 }} // Add this to ensure it starts hidden
+                animate={{ opacity: 0, x: -10 }}
                 whileHover={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.2 }} // Remove the delay
+                transition={{ duration: 0.2 }}
               >
                 View Resume →
               </motion.span>
