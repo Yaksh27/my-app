@@ -5,31 +5,39 @@ import { ChevronDown, Calendar, MapPin, Users, TrendingUp, FileText } from "luci
 
 const experiences = [
   {
-    title: "Frontend Engineer",
-    company: "Awesome Corp",
-    period: "Jan 2022 – Present",
-    logo: "🏢",
-    description: "Built beautiful, accessible UIs using React, Next.js, and Tailwind. Worked with designers and back-end devs. Helped grow product from 0 to 50k users.",
+    title: "Frontend Developer",
+    company: "Speaking Warrior",
+    period: "April 2024 – June 2024",
+    logo: "🗣️",
+    description: "Built and launched the Speaking Warrior website using React, Vite, Tailwind CSS, and Framer Motion. Integrated APIs, developed an admin dashboard, and handled full-stack features for a seamless user and admin experience.",
     details:
-      "• Led migration to Next.js App Router.\n• Developed reusable UI components.\n• Optimized performance (TTFB -40%).\n• Mentored 2 junior engineers.",
-    tech: ["React", "Next.js", "Tailwind", "Framer Motion"],
+      `• Built the entire website for Speaking Warrior using React, Vite, Tailwind CSS, and Framer Motion
+• Integrated and handled REST APIs for dynamic content and user management
+• Designed and implemented a custom admin dashboard for content and user control
+• Collaborated in a 2-member team to deliver the project end-to-end
+• Ensured responsive, accessible UI and smooth animations throughout the site`,
+    tech: ["React", "Vite", "Tailwind CSS", "Framer Motion", "REST API"],
     impact: "50k+ users",
     location: "Remote",
-    team: "8 members",
-    featured: true
+    team: "2 members",
+    featured: false
   },
   {
-    title: "UI/UX Intern",
-    company: "Designify",
-    period: "Jun 2021 – Dec 2021",
-    logo: "🎨",
-    description: "Helped design and prototype mobile apps. Turned Figma wireframes into pixel-perfect frontends. Learned design systems and accessibility.",
-    details:
-      "• Worked on 3 major redesigns.\n• Prototyped in Figma & shipped code.\n• Presented UX ideas to clients.",
-    tech: ["Figma", "React", "HTML/CSS"],
-    impact: "3 redesigns",
-    location: "San Francisco",
-    team: "12 members",
+       title: "Student Researcher",
+    company: "Creative Interfaces Lab, IIIT Delhi",
+    period: "Sept 2023 – April 2024",
+    logo: "🎓",
+    description: " Contributed to R&D on AR/VR Tools and Technologies, co-authoring a paper published at IEEE VR 2024 in Orlando, Florida, USA.",
+    details: `
+- Developed mobile AR tool for dyslexia screening using ML to analyze interaction patterns
+- Created immersive AR/VR educational experiences for enhanced cognitive engagement
+- Built VR training environments simulating real-world scenarios
+- Collaborated with research team on AR/VR application design and implementation
+    `,
+    tech: ["Machine Learning", "Unity", "C#", "AR/VR", "Research"],
+    impact: "Published paper",
+    location: "Delhi, India",
+    team: "3 members",
     featured: false
   },
 ];

@@ -358,12 +358,12 @@ export default function About() {
   const fullText = "I build bold, thoughtful digital products.";
 
   const funFacts = [
-    "🎨 Crafting pixel-perfect experiences",
+    "📚 Trying to land my dream job",
+    "💻 Crafting elegant code solutions",
+    "🌍 Exploring the world, one line of code at a time",
+    "🎯 Focused on delivering value",
     "☕ Fueled by creativity and coffee",
-    "⚡ Bringing ideas to life with code",
-    "📚 Learning something new every day",
-    "✨ Making the web more beautiful",
-    "🚀 Turning dreams into reality"
+    "💤 Taking a power nap"
   ];
 
   const [currentFactIndex, setCurrentFactIndex] = useState(0);

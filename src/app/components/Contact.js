@@ -271,7 +271,7 @@ export default function Contact() {
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                <span className="text-white font-bold">©</span>
+                <span className="text-cyan-400 font-bold">©</span>
               </motion.div>
             </div>
           </motion.div>

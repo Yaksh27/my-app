@@ -7,10 +7,41 @@ export default function LocationStatus() {
   const [currentTime, setCurrentTime] = useState('--:--:--');
   const [blinkVisible, setBlinkVisible] = useState(true);
   const [isClient, setIsClient] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState({ text: 'LOADING', color: 'text-gray-500', bgColor: 'bg-gray-500' });
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const getStatusFromTime = (timeString) => {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    const totalMinutes = hours * 60 + minutes;
+
+    // 3 AM to 10 AM - SLEEPING
+    if (totalMinutes >= 180 && totalMinutes < 600) {
+      return { text: 'SLEEPING', color: 'text-purple-600', bgColor: 'bg-purple-500' };
+    }
+    // 10 AM to 1 PM - MORNING PRODUCTIVITY
+    else if (totalMinutes >= 600 && totalMinutes < 780) {
+      return { text: 'MORNING PRODUCTIVITY', color: 'text-red-600', bgColor: 'bg-red-500' };
+    }
+    // 1 PM to 4 PM - ONLINE
+    else if (totalMinutes >= 780 && totalMinutes < 960) {
+      return { text: 'ONLINE', color: 'text-green-600', bgColor: 'bg-green-500' };
+    }
+    // 4 PM to 6 PM - AT THE GYM
+    else if (totalMinutes >= 960 && totalMinutes < 1080) {
+      return { text: ' PROBABLY AT THE GYM', color: 'text-orange-700', bgColor: 'bg-orange-500' };
+    }
+    // 6 PM to 10 PM - ONLINE
+    else if (totalMinutes >= 1080 && totalMinutes < 1320) {
+      return { text: 'ONLINE', color: 'text-green-600', bgColor: 'bg-green-500' };
+    }
+    // 10 PM to 3 AM - CHILLING
+    else {
+      return { text: 'CHILLING', color: 'text-blue-600', bgColor: 'bg-blue-500' };
+    }
+  };
 
   useEffect(() => {
     if (!isClient) return;
@@ -25,6 +56,7 @@ export default function LocationStatus() {
         hour12: false
       }).format(now);
       setCurrentTime(istTime);
+      setCurrentStatus(getStatusFromTime(istTime));
     };
 
     updateTime();
@@ -66,10 +98,10 @@ export default function LocationStatus() {
         
         <div className="flex items-center">
           <span className="text-gray-600 font-bold tracking-wider">STATUS:</span>
-          <span className="ml-2 text-green-600 font-bold flex items-center">
-            ONLINE
+          <span className={`ml-2 font-bold flex items-center ${currentStatus.color}`}>
+            {currentStatus.text}
             <motion.span
-              className="ml-1 w-2 h-2 bg-green-500 rounded-full"
+              className={`ml-1 w-2 h-2 rounded-full ${currentStatus.bgColor}`}
               animate={{ opacity: blinkVisible ? 1 : 0.3 }}
               transition={{ duration: 0.2 }}
             />
