@@ -548,7 +548,7 @@ export default function Experience() {
               whileHover={{ opacity: 0.8 }}
               transition={{ duration: 0.3 }}
             >
-              Hover to view and click my resume.
+              hover to view and click on my resume.
             </motion.p>
           </div>
         </motion.div>

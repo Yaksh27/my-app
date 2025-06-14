@@ -9,24 +9,28 @@ const SKILLS = [
   {
     category: "Languages",
     icons: [
-      { name: "html5", label: "HTML5", color: "#ff5722" },
+      { name: "html5", label: "HTML5", color: "#orange-400" },
       { name: "css", label: "CSS3", color: "#2196f3" },
       { name: "javascript", label: "JavaScript", color: "#ffd600" },
-      { name: "python", label: "Python", color: "#3776ab" },
+      { name: "python", label: "Python", color: "#3766ab" },
     ]
   },
   {
     category: "Frameworks",
     icons: [
       { name: "tailwindcss", label: "Tailwind CSS", color: "#38bdf8" },
-      { name: "express", label: "Express.js", color: "#444444" },
+      { name: "express", label: "Express.js", color: "white" },
+   
+      
+   
     ]
   },
   {
     category: "Libraries",
     icons: [
-      { name: "react", label: "React", color: "#61dafb" },
-      { name: "nextdotjs", label: "Next.js", color: "#000000" },
+      { name: "react", label: "React.js", color: "#61dafb" },
+      { name: "nextdotjs", label: "Next.js", color: "#gray-900" },
+      { name: "framer", label: "Framer Motion", color: "#06b6d4" },
     ]
   },
   {
@@ -40,8 +44,9 @@ const SKILLS = [
     category: "Tools",
     icons: [
       { name: "git", label: "Git", color: "#e94e31" },
-      { name: "github", label: "GitHub", color: "#24292f" },
+      { name: "github", label: "GitHub", color: "#white" },
       { name: "figma", label: "Figma", color: "#a259ff" },
+      { name: "vite", label: "Vite", color: "#646cff" },
     ]
   },
   {
