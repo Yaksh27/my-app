@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // Updated project data with multiple categories support
+    // Updated project data with multiple categories support
   const projects = [
     {
       id: 1,
@@ -15,8 +15,8 @@ const Projects = () => {
       categories: ["ai-ml", "web-app"],
       technologies: ["Next.js", "TypeScript", "React", "Google Gemini API", "tRPC", "Supabase", "Auth0"],
       image: "https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=600&h=400&fit=crop",
-      liveUrl: "#",
-      githubUrl: "#",
+      liveUrl: "https://sample-pink-gamma.vercel.app/",
+      githubUrl: "https://github.com/Yaksh27/sample",
       featured: true
     },
     {
@@ -26,8 +26,8 @@ const Projects = () => {
       categories: ["ai-ml", "web-app"],
       technologies: ["Python", "React.js", "OpenAI API", "OCR", "Node.js", "MongoDB", "Express.js"],
       image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop",
-      githubUrl: "#",
-      featured: true
+      githubUrl: "https://github.com/Hiren-AK/Diabease-DAIDP-DES529",
+      featured: false
     },
     {
       id: 3,
@@ -36,7 +36,7 @@ const Projects = () => {
       categories: ["other"],
       technologies: ["Python", "NetworkX", "Streamlit", "Graph Algorithms", "Data Visualization"],
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
-      githubUrl: "#",
+      githubUrl: "https://github.com/Yaksh27/network-community-detection",
       featured: false
     },
     {
@@ -47,8 +47,8 @@ const Projects = () => {
       technologies: ["React.js", "Machine Learning", "NLP", "RESTful APIs", "JSON", "CSS", "MySQL"],
       image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
       liveUrl: "#",
-      githubUrl: "#",
-      featured: true
+      githubUrl: "https://github.com/ib105/CSE508_Winter2024_59_Project",
+      featured: false
     },
     {
       id: 5,
@@ -58,7 +58,7 @@ const Projects = () => {
       technologies: ["Unity3D", "C#", "Machine Learning", "CNN", "EMNIST", "AR"],
       image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop",
       liveUrl: "#",
-      githubUrl: "#",
+      githubUrl: "https://drive.google.com/drive/u/3/folders/1gHkuZgYfjEYAahbiRyX0o0Y8jbj-jmua",
       featured: false
     },
     {
@@ -69,7 +69,7 @@ const Projects = () => {
       technologies: ["Java", "libGDX", "OOP", "JUnit", "GUI"],
       image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop",
       liveUrl: "#",
-      githubUrl: "#",
+      githubUrl: "https://github.com/ShlokM08/AP_GAME",
       featured: false
     },
     {
@@ -80,7 +80,7 @@ const Projects = () => {
       technologies: ["Python", "SQL", "APIs", "JSON", "Real-time Data"],
       image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&h=400&fit=crop",
       liveUrl: "#",
-      githubUrl: "#",
+      githubUrl: "https://github.com/Akp132/IIA_endsem_project",
       featured: false
     }
   ];
@@ -377,7 +377,9 @@ const Projects = () => {
                 {/* Action Button */}
                 <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                   <motion.a
-                    href={project.liveUrl}
+                    href={project.liveUrl !== "#" ? project.liveUrl : undefined}
+                    target={project.liveUrl !== "#" ? "_blank" : undefined}
+                    rel={project.liveUrl !== "#" ? "noopener noreferrer" : undefined}
                     className="flex items-center justify-center w-8 h-8 bg-gray-800/90 backdrop-blur-sm rounded-full hover:bg-gray-700 transition-colors duration-200 shadow-lg"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
@@ -428,13 +430,26 @@ const Projects = () => {
                 <div className="flex items-center justify-between pt-4 border-t border-gray-700/50">
                   <div className="flex items-center">
                     <a
-                      href={project.githubUrl}
+                      href={project.githubUrl !== "#" ? project.githubUrl : undefined}
+                      target={project.githubUrl !== "#" ? "_blank" : undefined}
+                      rel={project.githubUrl !== "#" ? "noopener noreferrer" : undefined}
                       className="flex items-center space-x-1.5 text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-200 font-medium"
                     >
                       <Github className="w-3.5 h-3.5" />
                       <span>Code</span>
                     </a>
                   </div>
+                  {project.liveUrl && project.liveUrl !== "#" && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1.5 text-sm text-cyan-400 hover:text-cyan-300 transition-colors duration-200 font-medium"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Live Demo</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
