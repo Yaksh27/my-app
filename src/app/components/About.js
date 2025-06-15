@@ -391,8 +391,7 @@ export default function About() {
       setCurrentFactIndex((prev) => (prev + 1) % funFacts.length);
     }, 3000);
     return () => clearInterval(factInterval);
-  }, [isClient]);
-
+ }, [isClient, funFacts.length]);
   return (
     <main className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-gray-800">
       
@@ -492,7 +491,7 @@ export default function About() {
                       </motion.span>
                     </div>
                     <div className="relative">
-                      <span className="text-white">I'M </span>
+                    <span className="text-white">I&apos;M </span>
                       <span className="relative">
                         <span 
                           className="bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent"
@@ -549,7 +548,7 @@ export default function About() {
                       whileHover={{ x: "0%" }}
                       transition={{ duration: 0.5 }}
                     />
-                    <span className="relative z-10">Let's Create Magic</span>
+                   <span className="relative z-10">Let&apos;s Create Magic</span>
                     <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </motion.a>
 

@@ -316,7 +316,7 @@ export default function Contact() {
                   filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.2))',
                 }}
               >
-                LET'S<span className="text-cyan-400">*</span>BUILD
+               LET&apos;S<span className="text-cyan-400">*</span>BUILD
               </h1>
               <motion.div
                 className="absolute -right-12 top-0"
@@ -349,7 +349,7 @@ export default function Contact() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed"
           >
-            Have an idea? Let's bring it to life. I'm always excited to work on new projects and collaborate with fellow creators.
+           Have an idea? Let&apos;s bring it to life. I&apos;m always excited to work on new projects and collaborate with fellow creators.
           </motion.p>
         </div>
 
@@ -370,7 +370,7 @@ export default function Contact() {
               <div className="relative z-10 p-8 md:p-12">
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold text-white mb-2">Send me a message</h2>
-                  <p className="text-gray-400">I'd love to hear from you. Drop me a line below.</p>
+                 <p className="text-gray-400">I&apos;d love to hear from you. Drop me a line below.</p>
                 </div>
                 
                 <form onSubmit={handleSubmit} autoComplete="off">
@@ -507,7 +507,7 @@ export default function Contact() {
                           </div>
                           <div>
                             <span className="font-semibold">Message sent successfully!</span>
-                            <p className="text-sm text-green-400/80 mt-1">I'll get back to you within 24 hours.</p>
+                            <p className="text-sm text-green-400/80 mt-1">I&apos;ll get back to you within 24 hours.</p>
                           </div>
                         </motion.div>
                       )}
@@ -527,7 +527,7 @@ export default function Contact() {
           >
             <div className="space-y-6">
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-white mb-2">Let's connect.</h3>
+                <h3 className="text-2xl font-bold text-white mb-2">Let&apos;s connect.</h3>
                 <p className="text-gray-400">Choose your preferred way to reach out:</p>
               </div>
               
