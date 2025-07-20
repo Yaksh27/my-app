@@ -4,42 +4,62 @@ import { useState, useEffect } from "react";
 import { ChevronDown, Calendar, MapPin, Users, TrendingUp, FileText } from "lucide-react";
 
 const experiences = [
-//   {
-//     title: "Frontend Developer",
-//     company: "Speaking Warrior",
-//     period: "April 2025 – June 2025",
-//     logo: "🗣️",
-//     description: "Built and launched the Speaking Warrior website using React, Vite, Tailwind CSS, and Framer Motion. Integrated APIs, developed an admin dashboard, and handled full-stack features for a seamless user and admin experience.",
-//     details:
-//       `• Built the entire website for Speaking Warrior using React, Vite, Tailwind CSS, and Framer Motion
-// • Integrated and handled REST APIs for dynamic content and user management
-// • Designed and implemented a custom admin dashboard for content and user control
-// • Collaborated in a 2-member team to deliver the project end-to-end
-// • Ensured responsive, accessible UI and smooth animations throughout the site`,
-//     tech: ["React.js", "Vite", "Tailwind CSS", "Framer Motion", "REST API"],
-//     impact: "1k+ users",
-//     location: "Remote",
-//     team: "2 members",
-//     featured: false
-//   },
   {
-       title: "Student Researcher",
+    title: "Frontend Developer Intern",
+    company: "Deckoviz (Freelance)",
+    period: "June 2025 – July 2025",
+    logo: "💼",
+    description: "Converted Figma UI/UX mockups into a pixel-perfect, responsive React application. Implemented lazy loading, image compression, and icon optimization to boost performance by 40% - deckoviz.com",
+    details: [
+      "Translated design mockups into React components with Tailwind CSS and React.js",
+      "Optimized assets (images, SVGs, icons), achieving 40% faster page loads",
+      "Collaborated asynchronously with a remote UK design team to maintain brand consistency",
+      "Deployed to Vercel with automated CI/CD and performance monitoring"
+    ],
+    tech: ["React.js", "Figma", "Tailwind CSS", "Git/Github", "CI/CD"],
+    impact: "40% faster load times",
+    location: "Remote (London, UK)",
+    team: "Freelance",
+    featured: false
+  },
+  {
+    title: "Web Developer Intern",
+    company: "Speaking Warrior",
+    period: "April 2025 – June 2025",
+    logo: "🗣️",
+    companyLink: "speakingwarrior.in",
+    description: "Built and launched a full-stack learning platform using React, Vite, Tailwind CSS, and Framer Motion. Integrated REST APIs, developed an admin dashboard, and ensured a seamless UX/UI.",
+    details: [
+      "Developed the Speaking Warrior frontend with React, Vite, Tailwind CSS and Framer Motion",
+      "Integrated RESTful APIs for content management and user authentication",
+      "Designed and implemented an admin dashboard for content control",
+      "Ensured accessibility and smooth animations throughout",
+      "Collaborated in a 2-member remote team to deliver end-to-end"
+    ],
+    tech: ["React.js", "Vite", "Tailwind CSS", "Framer Motion", "REST API"],
+    impact: "1k+ active users",
+    location: "Remote",
+    team: "2 members",
+    featured: false
+  },
+  {
+    title: "Student Researcher",
     company: "Creative Interfaces Lab, IIIT Delhi",
     period: "Sept 2023 – April 2024",
     logo: "🎓",
-    description: " Contributed to R&D on AR/VR Tools and Technologies, co-authoring a paper published at IEEE VR 2024 in Orlando, Florida, USA.",
-    details: `
-- Developed mobile AR tool for dyslexia screening using ML to analyze interaction patterns
-- Created immersive AR/VR educational experiences for enhanced cognitive engagement
-- Built VR training environments simulating real-world scenarios
-- Collaborated with research team on AR/VR application design and implementation
-    `,
+    description: "Contributed to AR/VR R&D and co-authored a paper presented at IEEE VR 2024 in Orlando, USA.",
+    details: [
+      "Developed a mobile AR dyslexia-screening tool using machine learning",
+      "Created immersive AR/VR educational experiences to enhance cognitive engagement",
+      "Built VR training simulations replicating real-world tasks",
+      "Collaborated with a 3-member research team on tool design and implementation"
+    ],
     tech: ["Machine Learning", "Unity", "C#", "AR/VR", "Research"],
-    impact: "Published paper",
+    impact: "Published at IEEE VR 2024",
     location: "Delhi, India",
     team: "3 members",
     featured: false
-  },
+  }
 ];
 
 // Background matching skills component style
@@ -260,8 +280,8 @@ export default function Experience() {
           </div>
         </motion.div>
 
-        {/* Experience Cards - Masonry Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        {/* Experience Cards - Fixed Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-8 max-w-6xl mx-auto items-start">
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
@@ -269,7 +289,7 @@ export default function Experience() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className={`relative ${index === 0 ? 'lg:row-span-2' : ''}`}
+              className="w-full"
             >
               {/* Featured badge */}
               {exp.featured && (
@@ -284,7 +304,7 @@ export default function Experience() {
               )}
 
               <motion.div
-                className="group relative bg-gray-800/40 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden"
+                className="group relative bg-gray-800/40 backdrop-blur-xl border border-gray-700/50 rounded-3xl p-8 shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden h-full"
                 whileHover={{ 
                   y: -8,
                   scale: 1.02,
@@ -305,7 +325,7 @@ export default function Experience() {
                 />
 
                 {/* Content */}
-                <div className="relative z-10">
+                <div className="relative z-10 h-full flex flex-col">
                   {/* Header with logo and period */}
                   <div className="flex items-start justify-between mb-6">
                     <motion.div
@@ -419,20 +439,31 @@ export default function Experience() {
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.2 }}
                         >
-                          <h4 className="text-cyan-400 font-bold mb-3 flex items-center gap-2">
+                          <h4 className="text-cyan-400 font-bold mb-4 flex items-center gap-2">
                             <TrendingUp className="w-4 h-4" />
                             Key Achievements
                           </h4>
-                          <div className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">
-                            {exp.details}
-                          </div>
+                          <ul className="text-gray-300 text-sm leading-relaxed space-y-2">
+                            {exp.details.map((detail, detailIndex) => (
+                              <motion.li
+                                key={detailIndex}
+                                className="flex items-start gap-3"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.1 * detailIndex }}
+                              >
+                                <span className="text-cyan-400 text-xs mt-1.5">•</span>
+                                <span>{detail}</span>
+                              </motion.li>
+                            ))}
+                          </ul>
                         </motion.div>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                  {/* Expand indicator */}
-                  <div className="flex items-center justify-center mt-4">
+                  {/* Expand indicator - pushed to bottom */}
+                  <div className="flex items-center justify-center mt-auto pt-4">
                     <motion.button
                       className="flex items-center gap-2 text-cyan-400 text-sm font-medium hover:text-cyan-300 transition-colors"
                       whileHover={{ scale: 1.05 }}
