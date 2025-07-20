@@ -511,7 +511,7 @@ export default function Experience() {
               }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              onClick={() => window.open('https://drive.google.com/file/d/1em8KIseVSDuw4FcFmSSp-eJnfIJ1Hzhf/view', '_blank')}
+              onClick={() => window.open('https://drive.google.com/file/d/1XTTXtUlQXx3jeYNBi9VEvBwq9GZmLyx8/view', '_blank')}
             >
               {/* File icon */}
               <motion.div
